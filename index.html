@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>大人の春カラー診断</title>
+  <meta name="description" content="8問でわかる｜大人の春カラー診断" />
+  <style>
+    :root{
+      --bg1:#f6f7fb;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#667085;
+      --line:rgba(16,24,40,.10);
+      --shadow:0 10px 30px rgba(16,24,40,.10);
+      --r:18px;
+      --tap: rgba(17, 17, 17, .06);
+      --accent:#111;
+
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-t: env(safe-area-inset-top, 0px);
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      color:var(--text);
+      background: var(--bg1);
+      overflow-x:hidden;
+    }
+
+    /* --- Watercolor-ish background (CSS only) --- */
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(1200px 900px at 15% 10%, rgba(255, 182, 193,.40), transparent 55%),
+        radial-gradient(1100px 900px at 85% 20%, rgba(173, 216, 230,.45), transparent 55%),
+        radial-gradient(1100px 900px at 25% 90%, rgba(221, 160, 221,.35), transparent 60%),
+        radial-gradient(1100px 900px at 85% 85%, rgba(152, 251, 152,.30), transparent 60%),
+        linear-gradient(180deg, #fbfbff 0%, #f6f7fb 35%, #f8f6fb 100%);
+      filter: saturate(1.05);
+    }
+    /* add subtle paper grain */
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(rgba(0,0,0,.035) 1px, transparent 1.6px);
+      background-size: 18px 18px;
+      opacity:.22;
+      mix-blend-mode:multiply;
+      pointer-events:none;
+    }
+
+    .wrap{
+      max-width: 860px;
+      margin:0 auto;
+      padding: calc(14px + var(--safe-t)) 14px calc(20px + var(--safe-b));
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin: 4px 0 14px;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      line-height:1.15;
+    }
+    .title h1{
+      margin:0;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing:.01em;
+    }
+    .title .sub{
+      color:var(--muted);
+      font-size: 12px;
+    }
+
+    .tag{
+      font-size:12px;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 6px 18px rgba(16,24,40,.06);
+      white-space:nowrap;
+    }
+
+    .card{
+      background: rgba(255,255,255,.88);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .card-inner{
+      padding: 16px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .postcard{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.86);
+      padding: 14px;
+      box-shadow: 0 10px 22px rgba(16,24,40,.08);
+    }
+
+    .postcard h2{
+      margin:0 0 6px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing:.01em;
+    }
+    .postcard p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .illus{
+      height: 180px;
+      border-radius: 16px;
+      border: 1px dashed rgba(16,24,40,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40)),
+        radial-gradient(300px 240px at 30% 40%, rgba(255, 182, 193,.35), transparent 65%),
+        radial-gradient(300px 240px at 70% 60%, rgba(173, 216, 230,.35), transparent 65%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(16,24,40,.45);
+      font-size: 12px;
+      letter-spacing:.02em;
+    }
+
+    .btn{
+      width:100%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border: 1px solid rgba(17,17,17,.18);
+      background: rgba(17,17,17,.92);
+      color:#fff;
+      padding: 13px 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing:.01em;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .06s ease, filter .2s ease, opacity .2s ease;
+    }
+    .btn:active{ transform: scale(.99); }
+    .btn.secondary{
+      background: rgba(255,255,255,.92);
+      color: var(--text);
+      border:1px solid var(--line);
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .row .btn{ flex:1; min-width: 180px; }
+
+    /* --- Quiz area --- */
+    .screen{
+      display:none;
+    }
+    .screen.active{
+      display:block;
+      animation: fadeIn .18s ease both;
+    }
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .quiz-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .qcount{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .qcount strong{
+      color: var(--text);
+      font-weight: 900;
+    }
+
+    .dots{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .dot{
+      width:10px;height:10px;
+      border-radius:999px;
+      border:1px solid rgba(17,17,17,.18);
+      background: rgba(255,255,255,.65);
+    }
+    .dot.on{
+      background: rgba(17,17,17,.86);
+      border-color: rgba(17,17,17,.06);
+    }
+
+    .qtitle{
+      font-size: 18px;
+      font-weight: 900;
+      margin: 6px 0 12px;
+      line-height: 1.35;
+    }
+
+    .choices{
+      display:grid;
+      gap: 10px;
+    }
+    .choice{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 8px 16px rgba(16,24,40,.06);
+      padding: 14px 14px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .06s ease, background .18s ease, border-color .18s ease;
+    }
+    .choice:active{ transform: scale(.995); }
+    .choice .label{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .badge{
+      width: 26px; height: 26px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(17,17,17,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(17,17,17,.80);
+      flex: 0 0 auto;
+    }
+    .choice .text{
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .choice.highlight{
+      background: rgba(17,17,17,.06);
+      border-color: rgba(17,17,17,.18);
+    }
+
+    /* slide transition wrapper */
+    .slide{
+      will-change: transform, opacity;
+    }
+    .slide.out{
+      animation: slideOut .18s ease both;
+    }
+    .slide.in{
+      animation: slideIn .18s ease both;
+    }
+    @keyframes slideOut{
+      from{ opacity:1; transform: translateX(0); }
+      to{ opacity:0; transform: translateX(-10px); }
+    }
+    @keyframes slideIn{
+      from{ opacity:0; transform: translateX(10px); }
+      to{ opacity:1; transform: translateX(0); }
+    }
+
+    /* --- Branch --- */
+    .branch-options{
+      display:grid;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .branch{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 8px 16px rgba(16,24,40,.06);
+      padding: 14px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .18s ease, border-color .18s ease, transform .06s ease;
+    }
+    .branch:active{ transform: scale(.995); }
+    .branch .left{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .branch .t{
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .branch .d{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .arrow{
+      font-weight: 900;
+      color: rgba(17,17,17,.55);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.9);
+    }
+
+    /* --- Loading --- */
+    .loading{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .bar{
+      width:100%;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width: 0%;
+      border-radius: 999px;
+      background: rgba(17,17,17,.86);
+      animation: fill 1.2s ease forwards;
+    }
+    @keyframes fill{
+      to{ width: 100%; }
+    }
+    .loading p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* --- Result --- */
+    .result-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    .mainball{
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      border: 1px solid rgba(16,24,40,.14);
+      box-shadow: 0 10px 22px rgba(16,24,40,.10);
+      position: relative;
+      overflow:hidden;
+      background: rgba(255,255,255,.90);
+    }
+    /* watercolor inside the circle */
+    .mainball::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(60px 60px at 30% 35%, rgba(255,255,255,.35), transparent 60%),
+        radial-gradient(110px 90px at 55% 45%, var(--mainColorA, rgba(255,182,193,.75)), transparent 70%),
+        radial-gradient(120px 100px at 45% 65%, var(--mainColorB, rgba(173,216,230,.55)), transparent 72%),
+        radial-gradient(120px 120px at 65% 35%, var(--mainColorC, rgba(221,160,221,.55)), transparent 70%);
+      filter: saturate(1.05);
+    }
+    .mainball::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(rgba(0,0,0,.045) 1px, transparent 1.6px);
+      background-size: 16px 16px;
+      opacity:.18;
+      mix-blend-mode:multiply;
+      pointer-events:none;
+    }
+
+    .result-name{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 220px;
+      flex: 1;
+    }
+    .result-name .k{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .result-name .v{
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing:.01em;
+    }
+
+    .subs{
+      display:grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .subitem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+    }
+    .swatch{
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 1px solid rgba(16,24,40,.16);
+      box-shadow: 0 6px 14px rgba(16,24,40,.08);
+      flex:0 0 auto;
+    }
+    .subitem .nm{
+      flex:1;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .subitem .pct{
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .desc{
+      margin-top: 14px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .desc .muted{
+      color: var(--muted);
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + var(--safe-b));
+      transform: translateX(-50%);
+      background: rgba(17,17,17,.92);
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.on{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .footer-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .footer-actions .btn{ flex:1; min-width: 180px; }
+
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .screen.active{ animation:none; }
+      .slide.out, .slide.in{ animation:none; }
+      .btn, .choice, .branch{ transition:none; }
+      .bar > div{ animation:none; width:100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="wrap">
+
+    <header>
+      <div class="title">
+        <h1>大人の春カラー診断</h1>
+        <div class="sub">ポストカード風｜画像は後で差し替えOK</div>
+      </div>
+      <div class="tag">8問でわかる</div>
+    </header>
+
+    <!-- TOP -->
+    <section id="screenTop" class="screen active">
+      <div class="card">
+        <div class="card-inner hero">
+          <div class="postcard">
+            <h2>あなたに似合う「春の大人カラー」</h2>
+            <p>
+              8つの質問に答えるだけで、今のあなたにフィットするカラー傾向がわかります。<br/>
+              <span class="muted">※イラストは後で差し替え（今はプレースホルダー）</span>
+            </p>
+          </div>
+
+          <div class="illus">（ここに女性イラスト：後で差し替え）</div>
+
+          <div class="row">
+            <button class="btn" id="btnStart">診断をはじめる</button>
+          </div>
+
+          <div class="small">
+            ・タップで次へ（0.2秒ハイライト→軽いスライド）<br/>
+            ・8問後に「結果を見る／もう少し詳しく（追加4問）」が選べます
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="screenQuiz" class="screen">
+      <div class="card">
+        <div class="card-inner">
+          <div class="quiz-top">
+            <div class="qcount" id="qcount"></div>
+            <div class="dots" id="dots"></div>
+          </div>
+
+          <div id="slide" class="slide">
+            <div class="qtitle" id="qtitle"></div>
+            <div class="choices" id="choices"></div>
+          </div>
+
+          <div class="footer-actions" style="margin-top:16px;">
+            <button class="btn secondary" id="btnBackTop">最初に戻る</button>
+            <button class="btn secondary" id="btnReset">リセット</button>
+          </div>
+
+          <div class="small">
+            ※質問文と選択肢は、このHTML内の <code>QUESTIONS</code> を書き換えたら差し替えできます。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANCH -->
+    <section id="screenBranch" class="screen">
+      <div class="card">
+        <div class="card-inner">
+          <div class="qtitle" style="margin-top:0;">ここまででOK？ もう少し詳しくする？</div>
+
+          <div class="branch-options">
+            <div class="branch" id="branchResult">
+              <div class="left">
+                <div class="t">□ 結果を見る</div>
+                <div class="d">今の回答だけでサクッと出します</div>
+              </div>
+              <div class="arrow">→</div>
+            </div>
+
+            <div class="branch" id="branchMore">
+              <div class="left">
+                <div class="t">□ もう少し詳しく診断する（追加4問）</div>
+                <div class="d">時間は少し増えるけど精度アップ</div>
+              </div>
+              <div class="arrow">→</div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <button class="btn secondary" id="btnBranchBack">戻る</button>
+          </div>
+
+          <div class="small">※追加4問は任意。仮の質問でも動きます。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOADING -->
+    <section id="screenLoading" class="screen">
+      <div class="card">
+        <div class="card-inner loading">
+          <div class="qtitle" style="margin-top:0;">あなたの傾向を分析しています…</div>
+          <p>まもなく結果が表示されます。</p>
+          <div class="bar" aria-label="loading"><div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="screenResult" class="screen">
+      <div class="card">
+        <div class="card-inner">
+          <div class="result-top">
+            <div class="mainball" id="mainball" aria-label="main color"></div>
+            <div class="result-name">
+              <div class="k">あなたのメインカラー</div>
+              <div class="v" id="mainName">—</div>
+              <div class="k" id="mainHint">—</div>
+            </div>
+          </div>
+
+          <div class="subs" id="subs"></div>
+
+          <div class="desc" id="desc"></div>
+
+          <div class="footer-actions">
+            <button class="btn" id="btnCopy">結果をコピー</button>
+            <button class="btn secondary" id="btnAgain">もう一度診断</button>
+          </div>
+
+          <div class="small">
+            ※結果文は簡易版です。売場用途に合わせて、後で文章を差し替えできます。
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast">コピーしました</div>
+
+  <script>
+    /**************************************************************
+     * ここだけ差し替えればOK：質問と選択肢（仮で動く）
+     **************************************************************/
+    const COLORS = {
+      SAKURA: {
+        key: "SAKURA",
+        name: "さくらピンク",
+        hex: "#f3a8b8",
+        watercolor: ["rgba(243,168,184,.85)","rgba(255,213,225,.65)","rgba(221,160,221,.55)"],
+        hint: "やわらかい華やかさが得意",
+        desc: "親しみやすい印象をつくるのが上手。春は淡いトーンで“抜け感”を出すと、品よく明るく見えます。"
+      },
+      MINT: {
+        key: "MINT",
+        name: "ミントグリーン",
+        hex: "#8fe1c7",
+        watercolor: ["rgba(143,225,199,.85)","rgba(152,251,152,.55)","rgba(173,216,230,.55)"],
+        hint: "清潔感と軽さが武器",
+        desc: "すっきり・爽やかに見せたい時の味方。白や生成りと合わせると、春らしい透明感が出ます。"
+      },
+      LAVENDER: {
+        key: "LAVENDER",
+        name: "ラベンダー",
+        hex: "#c4a3ff",
+        watercolor: ["rgba(196,163,255,.85)","rgba(221,160,221,.55)","rgba(173,216,230,.55)"],
+        hint: "上品さと芯の強さ",
+        desc: "落ち着きの中に、少しミステリアスな魅力。グレーやネイビーと合わせると“大人っぽい春”になります。"
+      },
+      SKY: {
+        key: "SKY",
+        name: "スカイブルー",
+        hex: "#7fb9ff",
+        watercolor: ["rgba(127,185,255,.85)","rgba(173,216,230,.60)","rgba(255,255,255,.45)"],
+        hint: "知的でフレッシュ",
+        desc: "軽快で信頼感のある印象。シャツ系・デニム・ライトグレーと相性がよく、春の定番として使いやすいです。"
+      },
+      BEIGE: {
+        key: "BEIGE",
+        name: "シアーベージュ",
+        hex: "#d9c7a6",
+        watercolor: ["rgba(217,199,166,.85)","rgba(255,244,224,.65)","rgba(173,216,230,.35)"],
+        hint: "大人の余裕と安心感",
+        desc: "ナチュラルで整った雰囲気が出るタイプ。春はベージュ×淡色で“やさしい大人感”が作れます。"
+      }
+    };
+
+    // 8問（必須）＋追加4問（任意）
+    // それぞれの選択肢に「どの色に寄るか」の重みを付けています（仮）
+    const QUESTIONS = [
+      // --- Q1〜Q8 ---
+      {
+        q: "休日の朝。まずしたいのは？",
+        a: [
+          { t: "お気に入りのカフェでのんびり", w: { SAKURA:2, BEIGE:1 } },
+          { t: "部屋を整えてスッキリさせる", w: { MINT:2, SKY:1 } },
+          { t: "音楽や本で自分の世界に入る", w: { LAVENDER:2, BEIGE:1 } },
+          { t: "軽く外へ出て気分転換", w: { SKY:2, MINT:1 } },
+        ]
+      },
+      {
+        q: "服を選ぶ時、いちばん大事なのは？",
+        a: [
+          { t: "顔色が明るく見えること", w: { SAKURA:2, SKY:1 } },
+          { t: "清潔感があること", w: { MINT:2, BEIGE:1 } },
+          { t: "落ち着き・品の良さ", w: { LAVENDER:2, BEIGE:1 } },
+          { t: "今っぽさ（軽さ・抜け感）", w: { SKY:2, SAKURA:1 } },
+        ]
+      },
+      {
+        q: "友人に言われがちな印象は？",
+        a: [
+          { t: "親しみやすい／話しやすい", w: { SAKURA:2, BEIGE:1 } },
+          { t: "しっかりしてる／爽やか", w: { SKY:2, MINT:1 } },
+          { t: "落ち着いてる／大人っぽい", w: { BEIGE:2, LAVENDER:1 } },
+          { t: "センスがある／雰囲気がある", w: { LAVENDER:2, SAKURA:1 } },
+        ]
+      },
+      {
+        q: "春の気分に近いのはどれ？",
+        a: [
+          { t: "ふわっと華やぐ", w: { SAKURA:2, LAVENDER:1 } },
+          { t: "軽やかに整える", w: { MINT:2, BEIGE:1 } },
+          { t: "透明感を足したい", w: { SKY:2, MINT:1 } },
+          { t: "穏やかに落ち着く", w: { BEIGE:2, LAVENDER:1 } },
+        ]
+      },
+      {
+        q: "小物を選ぶなら？",
+        a: [
+          { t: "淡い色のポーチ・アクセ", w: { SAKURA:2, LAVENDER:1 } },
+          { t: "白やシルバーで統一", w: { SKY:2, MINT:1 } },
+          { t: "生成り・ナチュラル素材", w: { BEIGE:2, MINT:1 } },
+          { t: "差し色で少し個性", w: { LAVENDER:2, SKY:1 } },
+        ]
+      },
+      {
+        q: "初対面で大事にしたいのは？",
+        a: [
+          { t: "やさしさ・感じの良さ", w: { SAKURA:2, BEIGE:1 } },
+          { t: "清潔感・信頼感", w: { SKY:2, MINT:1 } },
+          { t: "落ち着き・安心感", w: { BEIGE:2, SKY:1 } },
+          { t: "洗練・大人っぽさ", w: { LAVENDER:2, BEIGE:1 } },
+        ]
+      },
+      {
+        q: "気分が上がるのはどっち？",
+        a: [
+          { t: "ちょっと甘めの可愛さ", w: { SAKURA:2 } },
+          { t: "すっきりミニマル", w: { MINT:2, SKY:1 } },
+          { t: "上品で静かなムード", w: { LAVENDER:2, BEIGE:1 } },
+          { t: "爽やかで軽快", w: { SKY:2 } },
+        ]
+      },
+      {
+        q: "買い物のスタイルは？",
+        a: [
+          { t: "直感で“これ好き”を選ぶ", w: { SAKURA:2, LAVENDER:1 } },
+          { t: "使い回しやすさ重視", w: { BEIGE:2, MINT:1 } },
+          { t: "まず情報を集めてから", w: { SKY:2, LAVENDER:1 } },
+          { t: "必要なものをサッと", w: { MINT:2, SKY:1 } },
+        ]
+      },
+
+      // --- Q9〜Q12（追加4問） ---
+      {
+        extra: true,
+        q: "春に取り入れたい素材は？",
+        a: [
+          { t: "とろみ・やわらか素材", w: { SAKURA:2, BEIGE:1 } },
+          { t: "シャリ感・軽い生地", w: { SKY:2, MINT:1 } },
+          { t: "ナチュラルコットン", w: { BEIGE:2, MINT:1 } },
+          { t: "きれいめニット", w: { LAVENDER:2, SKY:1 } },
+        ]
+      },
+      {
+        extra: true,
+        q: "メイクの気分は？",
+        a: [
+          { t: "血色感を足したい", w: { SAKURA:2 } },
+          { t: "透明感・ツヤ", w: { SKY:2, MINT:1 } },
+          { t: "ナチュラル・薄め", w: { BEIGE:2, MINT:1 } },
+          { t: "引き算で上品", w: { LAVENDER:2, BEIGE:1 } },
+        ]
+      },
+      {
+        extra: true,
+        q: "褒められると嬉しいのは？",
+        a: [
+          { t: "可愛い・やさしそう", w: { SAKURA:2 } },
+          { t: "清潔感ある・爽やか", w: { MINT:2, SKY:1 } },
+          { t: "落ち着いてて上品", w: { BEIGE:2, LAVENDER:1 } },
+          { t: "雰囲気がある・センス良い", w: { LAVENDER:2, SKY:1 } },
+        ]
+      },
+      {
+        extra: true,
+        q: "春の一枚、選ぶなら？",
+        a: [
+          { t: "淡色トップス（ふんわり）", w: { SAKURA:2, BEIGE:1 } },
+          { t: "シャツ・ブラウス（すっきり）", w: { SKY:2, MINT:1 } },
+          { t: "薄手アウター（きれいめ）", w: { LAVENDER:2, BEIGE:1 } },
+          { t: "ナチュラル系（抜け感）", w: { BEIGE:2, MINT:1 } },
+        ]
+      },
+    ];
+
+    /**************************************************************
+     * アプリ本体
+     **************************************************************/
+    const $ = (sel)=>document.querySelector(sel);
+    const screens = {
+      top: $("#screenTop"),
+      quiz: $("#screenQuiz"),
+      branch: $("#screenBranch"),
+      loading: $("#screenLoading"),
+      result: $("#screenResult"),
+    };
+
+    const state = {
+      idx: 0,                 // current question index in active list
+      useExtra: false,        // whether continuing to extra 4
+      answers: [],            // store chosen option index
+      scores: initScores(),   // tally by color
+      activeList: []          // questions we are currently running through (Q1-8 or Q1-12)
+    };
+
+    function initScores(){
+      return {
+        SAKURA:0, MINT:0, LAVENDER:0, SKY:0, BEIGE:0
+      };
+    }
+
+    function showScreen(name){
+      Object.values(screens).forEach(s=>s.classList.remove("active"));
+      screens[name].classList.add("active");
+      window.scrollTo({top:0, behavior:"instant"});
+    }
+
+    function buildList(useExtra){
+      const base = QUESTIONS.filter(q => !q.extra);
+      const extra = QUESTIONS.filter(q => q.extra);
+      return useExtra ? base.concat(extra) : base;
+    }
+
+    function totalCount(){
+      return state.activeList.length;
+    }
+
+    function baseCount(){
+      return QUESTIONS.filter(q => !q.extra).length; // 8
+    }
+
+    function renderDots(currentIndex){
+      const total = baseCount(); // dots show 8 fixed (as per spec)
+      const dots = $("#dots");
+      dots.innerHTML = "";
+      for(let i=0;i<total;i++){
+        const d = document.createElement("div");
+        d.className = "dot" + (i < Math.min(currentIndex+1, total) ? " on" : "");
+        dots.appendChild(d);
+      }
+    }
+
+    function renderQuestion(){
+      const list = state.activeList;
+      const qObj = list[state.idx];
+      const qNo = state.idx + 1;
+
+      // Qx/8 display: show /8 for first 8, and /12 when extra is active (optional)
+      const base = baseCount();
+      const denom = state.useExtra ? (base + 4) : base;
+      $("#qcount").innerHTML = `<strong>Q${qNo}</strong> / ${denom}`;
+
+      renderDots(state.idx);
+
+      $("#qtitle").textContent = qObj.q;
+
+      const choices = $("#choices");
+      choices.innerHTML = "";
+
+      const letters = ["A","B","C","D"];
+      qObj.a.forEach((opt, i)=>{
+        const btn = document.createElement("div");
+        btn.className = "choice";
+        btn.setAttribute("role","button");
+        btn.setAttribute("tabindex","0");
+
+        btn.innerHTML = `
+          <div class="label">
+            <div class="badge">${letters[i] ?? (i+1)}</div>
+            <div class="text">${escapeHtml(opt.t)}</div>
+          </div>
+        `;
+
+        const go = ()=> choose(i, btn);
+        btn.addEventListener("click", go);
+        btn.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            go();
+          }
+        });
+
+        choices.appendChild(btn);
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    async function choose(optIndex, el){
+      // 0.2s highlight then slide
+      el.classList.add("highlight");
+      await sleep(200);
+
+      const qObj = state.activeList[state.idx];
+      const opt = qObj.a[optIndex];
+
+      // save answer
+      state.answers[state.idx] = optIndex;
+
+      // apply weights
+      for(const k in opt.w){
+        state.scores[k] = (state.scores[k] || 0) + opt.w[k];
+      }
+
+      // transition
+      const slide = $("#slide");
+      slide.classList.remove("in");
+      slide.classList.add("out");
+      await sleep(180);
+
+      // advance
+      state.idx++;
+
+      // if finished 8 and not decided extra -> branch
+      if(state.idx === baseCount() && !state.useExtra){
+        showScreen("branch");
+        slide.classList.remove("out");
+        slide.classList.add("in");
+        return;
+      }
+
+      // if finished all in active list -> loading -> result
+      if(state.idx >= totalCount()){
+        showLoadingThenResult();
+        slide.classList.remove("out");
+        slide.classList.add("in");
+        return;
+      }
+
+      // else next question
+      slide.classList.remove("out");
+      slide.classList.add("in");
+      renderQuestion();
+    }
+
+    function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+    function resetAll(){
+      state.idx = 0;
+      state.useExtra = false;
+      state.answers = [];
+      state.scores = initScores();
+      state.activeList = buildList(false);
+    }
+
+    async function showLoadingThenResult(){
+      showScreen("loading");
+      // loading bar anim is CSS; wait a bit
+      await sleep(1250);
+      computeAndRenderResult();
+      showScreen("result");
+    }
+
+    function computeAndRenderResult(){
+      const entries = Object.entries(state.scores)
+        .map(([k,v])=>({ key:k, score:v, ...COLORS[k] }));
+
+      // sort desc by score
+      entries.sort((a,b)=> b.score - a.score);
+
+      // handle edge case: all zero
+      if(entries[0].score === 0){
+        // fallback
+        entries.forEach((e,i)=> e.score = (entries.length - i));
+      }
+
+      const main = entries[0];
+      const subs = entries.slice(1,4); // 3 subs
+
+      // apply watercolor vars for main circle
+      const ball = $("#mainball");
+      ball.style.setProperty("--mainColorA", main.watercolor[0]);
+      ball.style.setProperty("--mainColorB", main.watercolor[1]);
+      ball.style.setProperty("--mainColorC", main.watercolor[2]);
+
+      $("#mainName").textContent = main.name;
+      $("#mainHint").textContent = main.hint;
+
+      // percentages (relative)
+      const sumTop4 = [main, ...subs].reduce((s,x)=> s + x.score, 0);
+      const pct = (x)=> Math.round((x.score / sumTop4) * 100);
+
+      const subsEl = $("#subs");
+      subsEl.innerHTML = "";
+      subs.forEach(s=>{
+        const row = document.createElement("div");
+        row.className = "subitem";
+        row.innerHTML = `
+          <div class="swatch" style="background:${s.hex}"></div>
+          <div class="nm">${escapeHtml(s.name)}</div>
+          <div class="pct">${pct(s)}%</div>
+        `;
+        subsEl.appendChild(row);
+      });
+
+      $("#desc").innerHTML = `
+        <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
+        <div class="muted" style="margin-top:8px;">
+          サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
+        </div>
+      `;
+
+      // store last result for copy
+      state._lastResult = { main, subs, pctMain: pct(main) };
+    }
+
+    async function copyResult(){
+      const r = state._lastResult;
+      const lines = [
+        "【大人の春カラー診断】",
+        `メイン：${r.main.name}`,
+        `サブ：${r.subs.map(s=>s.name).join(" / ")}`,
+        "",
+        `ひとこと：${r.main.hint}`,
+      ].join("\n");
+
+      try{
+        await navigator.clipboard.writeText(lines);
+        toast("コピーしました");
+      }catch(e){
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = lines;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("コピーしました");
+      }
+    }
+
+    let toastTimer = null;
+    function toast(msg){
+      const t = $("#toast");
+      t.textContent = msg;
+      t.classList.add("on");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> t.classList.remove("on"), 1200);
+    }
+
+    /**************************************************************
+     * イベント
+     **************************************************************/
+    $("#btnStart").addEventListener("click", ()=>{
+      resetAll();
+      state.activeList = buildList(false);
+      showScreen("quiz");
+      $("#slide").classList.add("in");
+      renderQuestion();
+    });
+
+    $("#btnBackTop").addEventListener("click", ()=>{
+      showScreen("top");
+    });
+
+    $("#btnReset").addEventListener("click", ()=>{
+      resetAll();
+      state.activeList = buildList(false);
+      showScreen("quiz");
+      renderQuestion();
+      toast("リセットしました");
+    });
+
+    $("#btnBranchBack").addEventListener("click", ()=>{
+      // go back to Q8 display (idx=7)
+      showScreen("quiz");
+      state.idx = baseCount()-1;
+      $("#slide").classList.add("in");
+      renderQuestion();
+    });
+
+    $("#branchResult").addEventListener("click", ()=>{
+      // finish with base 8
+      showLoadingThenResult();
+    });
+
+    $("#branchMore").addEventListener("click", ()=>{
+      // continue Q9-12
+      state.useExtra = true;
+      state.activeList = buildList(true);
+      showScreen("quiz");
+      $("#slide").classList.add("in");
+      renderQuestion(); // idx is 8 already (next question)
+    });
+
+    $("#btnCopy").addEventListener("click", copyResult);
+
+    $("#btnAgain").addEventListener("click", ()=>{
+      resetAll();
+      showScreen("top");
+      toast("もう一度どうぞ");
+    });
+
+    // init
+    resetAll();
+  </script>
+</body>
+</html>
