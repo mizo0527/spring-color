@@ -1092,20 +1092,7 @@ const COLOR_GUIDE = {
   });
 
   // 合わせやすいおすすめ配色
-  const guideEl = $("#guideColors");
-  guideEl.innerHTML = "";
-  const guideList = COLOR_GUIDE[main.key] || [];
 
-  guideList.forEach(c => {
-    const row = document.createElement("div");
-    row.className = "subitem";
-    row.innerHTML = `
-      <div class="swatch" style="background:${c.hex}"></div>
-      <div class="nm">${escapeHtml(c.name)}</div>
-      <div class="pct">おすすめ</div>
-    `;
-    guideEl.appendChild(row);
-  });
 
   $("#desc").innerHTML = `
     <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
