@@ -649,7 +649,14 @@
           </div>
 
           <div class="subs" id="subs"></div>
+<div class="desc" style="margin-top:14px;">
+  <strong>合わせやすいおすすめ配色</strong>
+  <div class="muted" style="margin-top:4px;">
+    メインカラーに足しやすい色を集めました。小物や靴下、バッグからでも取り入れやすいです。
+  </div>
+</div>
 
+<div class="subs" id="guideColors"></div>
           <div class="desc" id="desc"></div>
 
           <div class="footer-actions">
@@ -714,7 +721,43 @@
         desc: "ナチュラルで整った雰囲気が出るタイプ。春はベージュ×淡色で“やさしい大人感”が作れます。"
       }
     };
-
+const COLOR_GUIDE = {
+  SAKURA: [
+    { name: "ローズピンク", hex: "#d97c95" },
+    { name: "ピーチベージュ", hex: "#e8bfae" },
+    { name: "モーブ", hex: "#a67c9b" },
+    { name: "セージグリーン", hex: "#9caf88" },
+    { name: "ダスティブルー", hex: "#7f9db7" }
+  ],
+  MINT: [
+    { name: "ディープグリーン", hex: "#4f8f6b" },
+    { name: "セージグリーン", hex: "#9caf88" },
+    { name: "グレージュ", hex: "#b7aa98" },
+    { name: "ラベンダーグレー", hex: "#a79fb5" },
+    { name: "スモーキーブルー", hex: "#6f8fa8" }
+  ],
+  LAVENDER: [
+    { name: "プラム", hex: "#7f5a83" },
+    { name: "ダスティピンク", hex: "#c693a8" },
+    { name: "セージグリーン", hex: "#98ab8f" },
+    { name: "スレートブルー", hex: "#6d7f9e" },
+    { name: "モカ", hex: "#9a7b6f" }
+  ],
+  SKY: [
+    { name: "デニムブルー", hex: "#4f79a7" },
+    { name: "ミントグリーン", hex: "#8fcfb8" },
+    { name: "ライラック", hex: "#b7a1d9" },
+    { name: "コーラルピンク", hex: "#e28d7a" },
+    { name: "サンドベージュ", hex: "#cdb79e" }
+  ],
+  BEIGE: [
+    { name: "テラコッタ", hex: "#b86b4b" },
+    { name: "オリーブ", hex: "#7f8a4f" },
+    { name: "ダスティローズ", hex: "#c88d95" },
+    { name: "ティールブルー", hex: "#4f7f83" },
+    { name: "ラベンダー", hex: "#b39ddb" }
+  ]
+};
     // 8問（必須）＋追加4問（任意）
     // それぞれの選択肢に「どの色に寄るか」の重みを付けています（仮）
     const QUESTIONS = [
@@ -1051,6 +1094,20 @@
         `;
         subsEl.appendChild(row);
       });
+      const guideEl = $("#guideColors");
+guideEl.innerHTML = "";
+
+const guideList = COLOR_GUIDE[main.key] || [];
+guideList.forEach(c => {
+  const row = document.createElement("div");
+  row.className = "subitem";
+  row.innerHTML = `
+    <div class="swatch" style="background:${c.hex}"></div>
+    <div class="nm">${escapeHtml(c.name)}</div>
+    <div class="pct">おすすめ</div>
+  `;
+  guideEl.appendChild(row);
+});
 
       $("#desc").innerHTML = `
         <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
