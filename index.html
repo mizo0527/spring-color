@@ -1053,73 +1053,69 @@ const COLOR_GUIDE = {
       showScreen("result");
     }
 
-    function computeAndRenderResult(){
-      const entries = Object.entries(state.scores)
-        .map(([k,v])=>({ key:k, score:v, ...COLORS[k] }));
+  function computeAndRenderResult(){
+  const entries = Object.entries(state.scores)
+    .map(([k,v]) => ({ key:k, score:v, ...COLORS[k] }));
 
-      // sort desc by score
-      entries.sort((a,b)=> b.score - a.score);
+  entries.sort((a,b) => b.score - a.score);
 
-      // handle edge case: all zero
-      if(entries[0].score === 0){
-        // fallback
-        entries.forEach((e,i)=> e.score = (entries.length - i));
-      }
+  if(entries[0].score === 0){
+    entries.forEach((e,i) => e.score = (entries.length - i));
+  }
 
-      const main = entries[0];
-      const subs = entries.slice(1,4); // 3 subs
+  const main = entries[0];
+  const subs = entries.slice(1,4);
 
-      // apply watercolor vars for main circle
-      const ball = $("#mainball");
-      ball.style.setProperty("--mainColorA", main.watercolor[0]);
-      ball.style.setProperty("--mainColorB", main.watercolor[1]);
-      ball.style.setProperty("--mainColorC", main.watercolor[2]);
+  const ball = $("#mainball");
+  ball.style.setProperty("--mainColorA", main.watercolor[0]);
+  ball.style.setProperty("--mainColorB", main.watercolor[1]);
+  ball.style.setProperty("--mainColorC", main.watercolor[2]);
 
-      $("#mainName").textContent = main.name;
-      $("#mainHint").textContent = main.hint;
+  $("#mainName").textContent = main.name;
+  $("#mainHint").textContent = main.hint;
 
-      // percentages (relative)
-      const sumTop4 = [main, ...subs].reduce((s,x)=> s + x.score, 0);
-      const pct = (x)=> Math.round((x.score / sumTop4) * 100);
+  const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
+  const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-      const subsEl = $("#subs");
-      subsEl.innerHTML = "";
-      subs.forEach(s=>{
-        const row = document.createElement("div");
-        row.className = "subitem";
-        row.innerHTML = `
-          <div class="swatch" style="background:${s.hex}"></div>
-          <div class="nm">${escapeHtml(s.name)}</div>
-          <div class="pct">${pct(s)}%</div>
-        `;
-        subsEl.appendChild(row);
-      });
-     
-      const guideEl = $("#guideColors");
-guideEl.innerHTML = "";
+  // 診断サブカラー
+  const subsEl = $("#subs");
+  subsEl.innerHTML = "";
+  subs.forEach(s => {
+    const row = document.createElement("div");
+    row.className = "subitem";
+    row.innerHTML = `
+      <div class="swatch" style="background:${s.hex}"></div>
+      <div class="nm">${escapeHtml(s.name)}</div>
+      <div class="pct">${pct(s)}%</div>
+    `;
+    subsEl.appendChild(row);
+  });
 
-const guideList = COLOR_GUIDE[main.key] || [];
-guideList.forEach(c => {
-  const row = document.createElement("div");
-  row.className = "subitem";
-  row.innerHTML = `
-    <div class="swatch" style="background:${c.hex}"></div>
-    <div class="nm">${escapeHtml(c.name)}</div>
-    <div class="pct">おすすめ</div>
+  // 合わせやすいおすすめ配色
+  const guideEl = $("#guideColors");
+  guideEl.innerHTML = "";
+  const guideList = COLOR_GUIDE[main.key] || [];
+
+  guideList.forEach(c => {
+    const row = document.createElement("div");
+    row.className = "subitem";
+    row.innerHTML = `
+      <div class="swatch" style="background:${c.hex}"></div>
+      <div class="nm">${escapeHtml(c.name)}</div>
+      <div class="pct">おすすめ</div>
+    `;
+    guideEl.appendChild(row);
+  });
+
+  $("#desc").innerHTML = `
+    <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
+    <div class="muted" style="margin-top:8px;">
+      サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
+    </div>
   `;
-  guideEl.appendChild(row);
-});
 
-      $("#desc").innerHTML = `
-        <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
-        <div class="muted" style="margin-top:8px;">
-          サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
-        </div>
-      `;
-
-      // store last result for copy
-      state._lastResult = { main, subs, pctMain: pct(main) };
-    }
+  state._lastResult = { main, subs, pctMain: pct(main) };
+}
 
     async function copyResult(){
       const r = state._lastResult;
