@@ -904,11 +904,11 @@ const COLOR_GUIDE = {
       };
     }
 
-    function showScreen(name){
-      Object.values(screens).forEach(s=>s.classList.remove("active"));
-      screens[name].classList.add("active");
-      window.scrollTo({top:0, behavior:"instant"});
-    }
+   function showScreen(name){
+  Object.values(screens).forEach(s => s.classList.remove("active"));
+  screens[name].classList.add("active");
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
 
     function buildList(useExtra){
       const base = QUESTIONS.filter(q => !q.extra);
@@ -1092,7 +1092,21 @@ const COLOR_GUIDE = {
   });
 
   // 合わせやすいおすすめ配色
+const guideEl = $("#guideColors");
+guideEl.innerHTML = "";
 
+const guideList = COLOR_GUIDE[main.key] || [];
+
+guideList.forEach(c => {
+  const row = document.createElement("div");
+  row.className = "subitem";
+  row.innerHTML = `
+    <div class="swatch" style="background:${c.hex}"></div>
+    <div class="nm">${escapeHtml(c.name)}</div>
+    <div class="pct">おすすめ</div>
+  `;
+  guideEl.appendChild(row);
+});
 
   $("#desc").innerHTML = `
     <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
