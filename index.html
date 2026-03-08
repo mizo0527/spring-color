@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>大人の春カラー診断</title>
   <meta name="description" content="8問でわかる｜大人の春カラー診断" />
+  <meta name="theme-color" content="#f6f7fb" />
   <style>
     :root{
       --bg1:#f6f7fb;
@@ -79,37 +80,33 @@
     header{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin: 4px 0 14px;
-    }
-
-    .title{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      line-height:1.15;
-    }
-    .title h1{
-      margin:0;
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing:.01em;
-    }
-    .title .sub{
-      color:var(--muted);
-      font-size: 12px;
+      justify-content:flex-end;
+      margin: 4px 0 12px;
     }
 
     .tag{
+      position:relative;
       font-size:12px;
-      padding:8px 10px;
+      padding:8px 12px;
       border:1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255,255,255,.72);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 6px 18px rgba(16,24,40,.06);
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 8px 18px rgba(16,24,40,.08);
       white-space:nowrap;
+      letter-spacing:.02em;
+      font-weight:700;
+    }
+    .tag::after{
+      content:"";
+      position:absolute;
+      left:18px;
+      bottom:-7px;
+      width:12px;
+      height:12px;
+      background: rgba(255,255,255,.9);
+      border-left:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      transform: rotate(-45deg);
     }
 
     .card{
@@ -127,20 +124,39 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 16px;
     }
-
+    .title-card{
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      padding: 18px 16px;
+      box-shadow: 0 14px 28px rgba(16,24,40,.08);
+    }
+    .title-card h1{
+      margin:0;
+      font-size: 28px;
+      line-height:1.22;
+      letter-spacing:.01em;
+      font-weight:900;
+    }
+    .title-card p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      letter-spacing:.02em;
+    }
     .postcard{
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.86);
+      background: rgba(255,255,255,.88);
       padding: 14px;
       box-shadow: 0 10px 22px rgba(16,24,40,.08);
     }
 
     .postcard h2{
-      margin:0 0 6px;
-      font-size: 18px;
+      margin:0 0 8px;
+      font-size: 17px;
       font-weight: 800;
       letter-spacing:.01em;
     }
@@ -148,7 +164,7 @@
       margin:0;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
     .illus{
@@ -190,6 +206,13 @@
       background: rgba(255,255,255,.92);
       color: var(--text);
       border:1px solid var(--line);
+    }
+    .btn.start-btn{
+      background: linear-gradient(135deg, #111 0%, #2e2e2e 100%);
+      border-color: rgba(17,17,17,.2);
+      min-height: 52px;
+      font-size: 15px;
+      box-shadow: 0 14px 24px rgba(17,17,17,.22);
     }
 
     .row{
@@ -465,9 +488,21 @@
       color: var(--muted);
     }
     .result-name .v{
+      display:flex;
+      align-items:center;
+      gap:8px;
       font-size: 20px;
       font-weight: 950;
       letter-spacing:.01em;
+    }
+    .main-dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(16,24,40,.16);
+      box-shadow: 0 2px 8px rgba(16,24,40,.18);
+      background:#fff;
+      flex:0 0 auto;
     }
 
     .subs{
@@ -588,10 +623,6 @@
   <div class="wrap">
 
     <header>
-      <div class="title">
-        <h1>大人の春カラー診断</h1>
-        <div class="sub">ポストカード風｜画像は後で差し替えOK</div>
-      </div>
       <div class="tag">8問でわかる</div>
     </header>
 
@@ -599,18 +630,23 @@
     <section id="screenTop" class="screen active">
       <div class="card">
         <div class="card-inner hero">
-          <div class="postcard">
-            <h2>あなたに似合う「春の大人カラー」</h2>
-            <p>
-              8つの質問に答えるだけで、今のあなたにフィットするカラー傾向がわかります。<br/>
-              <span class="muted">※イラストは後で差し替え（今はプレースホルダー）</span>
-            </p>
+          <div class="title-card">
+            <h1>大人の春カラー診断</h1>
+            <p>あなたに似合う春カラー</p>
           </div>
 
           <div class="illus">（ここに女性イラスト：後で差し替え）</div>
 
+          <div class="postcard">
+            <h2>催事売場で、すぐに使える色のヒント</h2>
+            <p>
+              スマホで8つの質問に答えるだけ。今のあなたにフィットする春カラーの傾向を、
+              分かりやすく提案します。
+            </p>
+          </div>
+
           <div class="row">
-            <button class="btn" id="btnStart">診断をはじめる</button>
+            <button class="btn start-btn" id="btnStart">診断をはじめる</button>
           </div>
 
           <div class="small">
@@ -701,8 +737,8 @@
           <div class="result-top">
             <div class="mainball" id="mainball" aria-label="main color"></div>
             <div class="result-name">
-              <div class="k">あなたのメインカラー</div>
-              <div class="v" id="mainName">—</div>
+              <div class="k">あなたの春カラー</div>
+              <div class="v"><span id="mainName">—</span><span class="main-dot" id="mainDot" aria-hidden="true"></span></div>
               <div class="k" id="mainHint">—</div>
             </div>
           </div>
@@ -791,7 +827,7 @@
         typeName: "Quiet Elegance",
         typeDesc: "静かな存在感を放つ品格型。落ち着いたムードの中に、凛とした芯を感じさせます。",
         strengths: ["上品に見える", "大人っぽさが出る", "印象に奥行きが出る"],
-        weaknesses: ["重くえやすい", "近寄りがたく映る", "顔色が沈むことがある"],
+        weaknesses: ["重く見えやすい", "近寄りがたく映る", "顔色が沈むことがある"],
         hint: "上品さと芯の強さ",
         desc: "落ち着きの中に、少しミステリアスな魅力。グレーやネイビーと合わせると“大人っぽい春”になります。"
       },
@@ -961,7 +997,7 @@ const COLOR_GUIDE = {
       },
       {
         extra: true,
-        q: "褒められと嬉しいのは？",
+        q: "褒められると嬉しいのは？",
         a: [
           { t: "可愛い・やさしそう", w: { SAKURA:2 } },
           { t: "清潔感ある・爽やか", w: { MINT:2, SKY:1 } },
@@ -1180,6 +1216,7 @@ const COLOR_GUIDE = {
 
   $("#mainName").textContent = main.name;
   $("#mainHint").textContent = main.hint;
+  $("#mainDot").style.background = main.hex;
   document.body.classList.add("result-tone");
   document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
   document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
