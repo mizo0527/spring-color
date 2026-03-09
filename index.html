@@ -124,27 +124,42 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 14px;
     }
     .title-card{
       border-radius: 18px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.92);
-      padding: 18px 16px;
+      padding: 16px 14px;
       box-shadow: 0 14px 28px rgba(16,24,40,.08);
+      display:grid;
+      gap:10px;
+      justify-items:center;
+      text-align:center;
     }
-    .title-card h1{
-      margin:0;
-      font-size: 28px;
-      line-height:1.22;
-      letter-spacing:.01em;
-      font-weight:900;
+    .title-logo{
+      width:min(100%, 290px);
+      height:auto;
+      display:block;
+      object-fit:contain;
     }
     .title-card p{
-      margin:8px 0 0;
+      margin:0;
       color:var(--muted);
       font-size:14px;
       letter-spacing:.02em;
+    }
+    .quiz-logo-wrap{
+      display:flex;
+      justify-content:center;
+      margin-bottom: 10px;
+    }
+    .quiz-logo{
+      width:min(45vw, 130px);
+      height:auto;
+      display:block;
+      object-fit:contain;
+      opacity:.94;
     }
     .postcard{
       border-radius: 16px;
@@ -168,7 +183,8 @@
     }
 
     .illus{
-      height: 180px;
+      position:relative;
+      height: 176px;
       border-radius: 16px;
       border: 1px dashed rgba(16,24,40,.18);
       background:
@@ -178,9 +194,29 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       color: rgba(16,24,40,.45);
       font-size: 12px;
       letter-spacing:.02em;
+    }
+    .hero-visual{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      border-radius: inherit;
+      position:relative;
+      z-index:1;
+    }
+    .illus-fallback{
+      position:absolute;
+      inset:auto 0 12px 0;
+      text-align:center;
+      color: rgba(16,24,40,.45);
+      font-size: 12px;
+      letter-spacing:.02em;
+      pointer-events:none;
+      z-index:0;
     }
 
     .btn{
@@ -219,7 +255,7 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top: 12px;
+      margin-top: 6px;
     }
     .row .btn{ flex:1; min-width: 180px; }
 
@@ -631,14 +667,17 @@
       <div class="card">
         <div class="card-inner hero">
           <div class="title-card">
-            <h1>大人の春カラー診断</h1>
-            <p>あなたに似合う春カラー</p>
+            <img src="spring_color_logo_clean.png" alt="大人の春カラー診断" class="title-logo" />
+            <p>あなたに似合う春カラーのヒント</p>
           </div>
 
-          <div class="illus">（ここに女性イラスト：後で差し替え）</div>
+          <div class="illus">
+            <img src="top_visual.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async" />
+            <span class="illus-fallback" aria-hidden="true">メインビジュアル</span>
+          </div>
 
           <div class="postcard">
-            <h2>催事売場で、すぐに使える色のヒント</h2>
+            <h2>あなたに似合う春カラーのヒント</h2>
             <p>
               スマホで8つの質問に答えるだけ。今のあなたにフィットする春カラーの傾向を、
               分かりやすく提案します。
@@ -651,7 +690,8 @@
 
           <div class="small">
             ・タップで次へ（0.2秒ハイライト→軽いスライド）<br/>
-            ・8問後に「結果を見る／もう少し詳しく（追加4問）」が選べます
+            ・8問後に「結果を見る／もう少し詳しく（追加4問）」が選べます<br/>
+            ・使用画像：spring_color_logo_clean.png / logo_small.png / top_visual.png
           </div>
         </div>
       </div>
@@ -661,6 +701,9 @@
     <section id="screenQuiz" class="screen">
       <div class="card">
         <div class="card-inner">
+          <div class="quiz-logo-wrap">
+            <img src="logo_small.png" alt="Spring Color" class="quiz-logo" />
+          </div>
           <div class="quiz-top">
             <div class="qcount" id="qcount"></div>
             <div class="dots" id="dots"></div>
@@ -1030,11 +1073,11 @@ const COLOR_GUIDE = {
     };
 
     const state = {
-      idx: 0,                 // current question index in active list
-      useExtra: false,        // whether continuing to extra 4
-      answers: [],            // store chosen option index
-      scores: initScores(),   // tally by color
-      activeList: []          // questions we are currently running through (Q1-8 or Q1-12)
+      idx: 0,
+      useExtra: false,
+      answers: [],
+      scores: initScores(),
+      activeList: []
     };
 
     function initScores(){
@@ -1060,11 +1103,11 @@ const COLOR_GUIDE = {
     }
 
     function baseCount(){
-      return QUESTIONS.filter(q => !q.extra).length; // 8
+      return QUESTIONS.filter(q => !q.extra).length;
     }
 
     function renderDots(currentIndex){
-      const total = baseCount(); // dots show 8 fixed (as per spec)
+      const total = baseCount();
       const dots = $("#dots");
       dots.innerHTML = "";
       for(let i=0;i<total;i++){
@@ -1079,7 +1122,6 @@ const COLOR_GUIDE = {
       const qObj = list[state.idx];
       const qNo = state.idx + 1;
 
-      // Qx/8 display: show /8 for first 8, and /12 when extra is active (optional)
       const base = baseCount();
       const denom = state.useExtra ? (base + 4) : base;
       $("#qcount").innerHTML = `<strong>${qNo}</strong> / ${denom}`;
@@ -1129,31 +1171,25 @@ const COLOR_GUIDE = {
     }
 
     async function choose(optIndex, el){
-      // 0.2s highlight then slide
       el.classList.add("highlight");
       await sleep(200);
 
       const qObj = state.activeList[state.idx];
       const opt = qObj.a[optIndex];
 
-      // save answer
       state.answers[state.idx] = optIndex;
 
-      // apply weights
       for(const k in opt.w){
         state.scores[k] = (state.scores[k] || 0) + opt.w[k];
       }
 
-      // transition
       const slide = $("#slide");
       slide.classList.remove("in");
       slide.classList.add("out");
       await sleep(180);
 
-      // advance
       state.idx++;
 
-      // if finished 8 and not decided extra -> branch
       if(state.idx === baseCount() && !state.useExtra){
         showScreen("branch");
         slide.classList.remove("out");
@@ -1161,7 +1197,6 @@ const COLOR_GUIDE = {
         return;
       }
 
-      // if finished all in active list -> loading -> result
       if(state.idx >= totalCount()){
         showLoadingThenResult();
         slide.classList.remove("out");
@@ -1169,7 +1204,6 @@ const COLOR_GUIDE = {
         return;
       }
 
-      // else next question
       slide.classList.remove("out");
       slide.classList.add("in");
       renderQuestion();
@@ -1190,7 +1224,6 @@ const COLOR_GUIDE = {
 
     async function showLoadingThenResult(){
       showScreen("loading");
-      // loading bar anim is CSS; wait a bit
       await sleep(1250);
       computeAndRenderResult();
       showScreen("result");
@@ -1226,7 +1259,6 @@ const COLOR_GUIDE = {
   const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
   const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-  // 診断サブカラー
   const subsEl = $("#subs");
   subsEl.innerHTML = "";
   subs.forEach(s => {
@@ -1240,7 +1272,6 @@ const COLOR_GUIDE = {
     subsEl.appendChild(row);
   });
 
-  // 合わせやすいおすすめ配色
 const guideEl = $("#guideColors");
 guideEl.innerHTML = "";
 
@@ -1279,7 +1310,7 @@ guideList.forEach(c => {
         `メイン：${r.main.name}`,
         `サブ：${r.subs.map(s=>s.name).join(" / ")}`,
         "",
-        `ひとこと：${r.main.hint}`,
+        `おすすめポイント：${r.main.hint}`,
         `タイプ：${r.main.typeCode} / ${r.main.typeName}`
       ].join("\n");
 
@@ -1287,7 +1318,6 @@ guideList.forEach(c => {
         await navigator.clipboard.writeText(lines);
         toast("コピーしました");
       }catch(e){
-        // fallback
         const ta = document.createElement("textarea");
         ta.value = lines;
         document.body.appendChild(ta);
@@ -1307,9 +1337,6 @@ guideList.forEach(c => {
       toastTimer = setTimeout(()=> t.classList.remove("on"), 1200);
     }
 
-    /**************************************************************
-     * イベント
-     **************************************************************/
     $("#btnStart").addEventListener("click", ()=>{
       resetAll();
       state.activeList = buildList(false);
@@ -1331,7 +1358,6 @@ guideList.forEach(c => {
     });
 
     $("#btnBranchBack").addEventListener("click", ()=>{
-      // go back to Q8 display (idx=7)
       showScreen("quiz");
       state.idx = baseCount()-1;
       $("#slide").classList.add("in");
@@ -1339,17 +1365,15 @@ guideList.forEach(c => {
     });
 
     $("#branchResult").addEventListener("click", ()=>{
-      // finish with base 8
       showLoadingThenResult();
     });
 
     $("#branchMore").addEventListener("click", ()=>{
-      // continue Q9-12
       state.useExtra = true;
       state.activeList = buildList(true);
       showScreen("quiz");
       $("#slide").classList.add("in");
-      renderQuestion(); // idx is 8 already (next question)
+      renderQuestion();
     });
 
     $("#btnCopy").addEventListener("click", copyResult);
@@ -1360,7 +1384,6 @@ guideList.forEach(c => {
       toast("もう一度どうぞ");
     });
 
-    // init
     resetAll();
   </script>
 </body>
