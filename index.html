@@ -77,38 +77,6 @@
       padding: calc(14px + var(--safe-t)) 14px calc(20px + var(--safe-b));
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      margin: 4px 0 12px;
-    }
-
-    .tag{
-      position:relative;
-      font-size:12px;
-      padding:8px 12px;
-      border:1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 8px 18px rgba(16,24,40,.08);
-      white-space:nowrap;
-      letter-spacing:.02em;
-      font-weight:700;
-    }
-    .tag::after{
-      content:"";
-      position:absolute;
-      left:18px;
-      bottom:-7px;
-      width:12px;
-      height:12px;
-      background: rgba(255,255,255,.9);
-      border-left:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      transform: rotate(-45deg);
-    }
-
     .card{
       background: rgba(255,255,255,.88);
       border:1px solid var(--line);
@@ -124,30 +92,7 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    .title-card{
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.92);
-      padding: 16px 14px;
-      box-shadow: 0 14px 28px rgba(16,24,40,.08);
-      display:grid;
-      gap:10px;
-      justify-items:center;
-      text-align:center;
-    }
-    .title-logo{
-      width:min(100%, 290px);
-      height:auto;
-      display:block;
-      object-fit:contain;
-    }
-    .title-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      letter-spacing:.02em;
+      gap: 10px;
     }
     .quiz-logo-wrap{
       display:flex;
@@ -184,7 +129,7 @@
 
     .illus{
       position:relative;
-      height: 176px;
+      height: 420px;
       border-radius: 16px;
       border: 1px dashed rgba(16,24,40,.18);
       background:
@@ -255,7 +200,7 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top: 6px;
+      margin-top: 2px;
     }
     .row .btn{ flex:1; min-width: 180px; }
 
@@ -658,19 +603,10 @@
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
 
-    <header>
-      <div class="tag">8問でわかる</div>
-    </header>
-
     <!-- TOP -->
     <section id="screenTop" class="screen active">
       <div class="card">
         <div class="card-inner hero">
-          <div class="title-card">
-            <img src="spring_color_logo_clean.png" alt="大人の春カラー診断" class="title-logo" />
-            <p>あなたに似合う春カラーのヒント</p>
-          </div>
-
           <div class="illus">
             <img src="top_visual.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async" />
             <span class="illus-fallback" aria-hidden="true">メインビジュアル</span>
@@ -686,12 +622,6 @@
 
           <div class="row">
             <button class="btn start-btn" id="btnStart">診断をはじめる</button>
-          </div>
-
-          <div class="small">
-            ・タップで次へ（0.2秒ハイライト→軽いスライド）<br/>
-            ・8問後に「結果を見る／もう少し詳しく（追加4問）」が選べます<br/>
-            ・使用画像：spring_color_logo_clean.png / logo_small.png / top_visual.png
           </div>
         </div>
       </div>
@@ -828,9 +758,6 @@
   <div class="toast" id="toast">コピーしました</div>
 
   <script>
-    /**************************************************************
-     * ここだけ差し替えればOK：質問と選択肢（仮で動く）
-     **************************************************************/
     const COLORS = {
       SAKURA: {
         key: "SAKURA",
@@ -903,47 +830,45 @@
         desc: "ナチュラルで整った雰囲気が出るタイプ。春はベージュ×淡色で“やさしい大人感”が作れます。"
       }
     };
-const COLOR_GUIDE = {
-  SAKURA: [
-    { name: "ローズピンク", hex: "#d97c95" },
-    { name: "ピーチベージュ", hex: "#e8bfae" },
-    { name: "モーブ", hex: "#a67c9b" },
-    { name: "セージグリーン", hex: "#9caf88" },
-    { name: "ダスティブルー", hex: "#7f9db7" }
-  ],
-  MINT: [
-    { name: "ディープグリーン", hex: "#4f8f6b" },
-    { name: "セージグリーン", hex: "#9caf88" },
-    { name: "グレージュ", hex: "#b7aa98" },
-    { name: "ラベンダーグレー", hex: "#a79fb5" },
-    { name: "スモーキーブルー", hex: "#6f8fa8" }
-  ],
-  LAVENDER: [
-    { name: "プラム", hex: "#7f5a83" },
-    { name: "ダスティピンク", hex: "#c693a8" },
-    { name: "セージグリーン", hex: "#98ab8f" },
-    { name: "スレートブルー", hex: "#6d7f9e" },
-    { name: "モカ", hex: "#9a7b6f" }
-  ],
-  SKY: [
-    { name: "デニムブルー", hex: "#4f79a7" },
-    { name: "ミントグリーン", hex: "#8fcfb8" },
-    { name: "ライラック", hex: "#b7a1d9" },
-    { name: "コーラルピンク", hex: "#e28d7a" },
-    { name: "サンドベージュ", hex: "#cdb79e" }
-  ],
-  BEIGE: [
-    { name: "テラコッタ", hex: "#b86b4b" },
-    { name: "オリーブ", hex: "#7f8a4f" },
-    { name: "ダスティローズ", hex: "#c88d95" },
-    { name: "ティールブルー", hex: "#4f7f83" },
-    { name: "ラベンダー", hex: "#b39ddb" }
-  ]
-};
-    // 8問（必須）＋追加4問（任意）
-    // それぞれの選択肢に「どの色に寄るか」の重みを付けています（仮）
+    const COLOR_GUIDE = {
+      SAKURA: [
+        { name: "ローズピンク", hex: "#d97c95" },
+        { name: "ピーチベージュ", hex: "#e8bfae" },
+        { name: "モーブ", hex: "#a67c9b" },
+        { name: "セージグリーン", hex: "#9caf88" },
+        { name: "ダスティブルー", hex: "#7f9db7" }
+      ],
+      MINT: [
+        { name: "ディープグリーン", hex: "#4f8f6b" },
+        { name: "セージグリーン", hex: "#9caf88" },
+        { name: "グレージュ", hex: "#b7aa98" },
+        { name: "ラベンダーグレー", hex: "#a79fb5" },
+        { name: "スモーキーブルー", hex: "#6f8fa8" }
+      ],
+      LAVENDER: [
+        { name: "プラム", hex: "#7f5a83" },
+        { name: "ダスティピンク", hex: "#c693a8" },
+        { name: "セージグリーン", hex: "#98ab8f" },
+        { name: "スレートブルー", hex: "#6d7f9e" },
+        { name: "モカ", hex: "#9a7b6f" }
+      ],
+      SKY: [
+        { name: "デニムブルー", hex: "#4f79a7" },
+        { name: "ミントグリーン", hex: "#8fcfb8" },
+        { name: "ライラック", hex: "#b7a1d9" },
+        { name: "コーラルピンク", hex: "#e28d7a" },
+        { name: "サンドベージュ", hex: "#cdb79e" }
+      ],
+      BEIGE: [
+        { name: "テラコッタ", hex: "#b86b4b" },
+        { name: "オリーブ", hex: "#7f8a4f" },
+        { name: "ダスティローズ", hex: "#c88d95" },
+        { name: "ティールブルー", hex: "#4f7f83" },
+        { name: "ラベンダー", hex: "#b39ddb" }
+      ]
+    };
+
     const QUESTIONS = [
-      // --- Q1〜Q8 ---
       {
         q: "休日の朝。まずしたいのは？",
         a: [
@@ -1016,8 +941,6 @@ const COLOR_GUIDE = {
           { t: "必要なものをサッと", w: { MINT:2, SKY:1 } },
         ]
       },
-
-      // --- Q9〜Q12（追加4問） ---
       {
         extra: true,
         q: "春に取り入れたい素材は？",
@@ -1060,9 +983,6 @@ const COLOR_GUIDE = {
       },
     ];
 
-    /**************************************************************
-     * アプリ本体
-     **************************************************************/
     const $ = (sel)=>document.querySelector(sel);
     const screens = {
       top: $("#screenTop"),
@@ -1086,11 +1006,11 @@ const COLOR_GUIDE = {
       };
     }
 
-   function showScreen(name){
-  Object.values(screens).forEach(s => s.classList.remove("active"));
-  screens[name].classList.add("active");
-  window.scrollTo({ top: 0, behavior: "auto" });
-}
+    function showScreen(name){
+      Object.values(screens).forEach(s => s.classList.remove("active"));
+      screens[name].classList.add("active");
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
 
     function buildList(useExtra){
       const base = QUESTIONS.filter(q => !q.extra);
@@ -1229,78 +1149,78 @@ const COLOR_GUIDE = {
       showScreen("result");
     }
 
-  function computeAndRenderResult(){
-  const entries = Object.entries(state.scores)
-    .map(([k,v]) => ({ key:k, score:v, ...COLORS[k] }));
+    function computeAndRenderResult(){
+      const entries = Object.entries(state.scores)
+        .map(([k,v]) => ({ key:k, score:v, ...COLORS[k] }));
 
-  entries.sort((a,b) => b.score - a.score);
+      entries.sort((a,b) => b.score - a.score);
 
-  if(entries[0].score === 0){
-    entries.forEach((e,i) => e.score = (entries.length - i));
-  }
+      if(entries[0].score === 0){
+        entries.forEach((e,i) => e.score = (entries.length - i));
+      }
 
-  const main = entries[0];
-  const subs = entries.slice(1,4);
+      const main = entries[0];
+      const subs = entries.slice(1,4);
 
-  const ball = $("#mainball");
-  ball.style.setProperty("--mainColorA", main.watercolor[0]);
-  ball.style.setProperty("--mainColorB", main.watercolor[1]);
-  ball.style.setProperty("--mainColorC", main.watercolor[2]);
+      const ball = $("#mainball");
+      ball.style.setProperty("--mainColorA", main.watercolor[0]);
+      ball.style.setProperty("--mainColorB", main.watercolor[1]);
+      ball.style.setProperty("--mainColorC", main.watercolor[2]);
 
-  $("#mainName").textContent = main.name;
-  $("#mainHint").textContent = main.hint;
-  $("#mainDot").style.background = main.hex;
-  document.body.classList.add("result-tone");
-  document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
-  document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
-  document.body.style.setProperty("--result-bg-c", main.bgTone[2]);
-  document.body.style.setProperty("--result-bg-d", main.bgTone[3]);
+      $("#mainName").textContent = main.name;
+      $("#mainHint").textContent = main.hint;
+      $("#mainDot").style.background = main.hex;
+      document.body.classList.add("result-tone");
+      document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
+      document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
+      document.body.style.setProperty("--result-bg-c", main.bgTone[2]);
+      document.body.style.setProperty("--result-bg-d", main.bgTone[3]);
 
-  const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
-  const pct = (x) => Math.round((x.score / sumTop4) * 100);
+      const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
+      const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-  const subsEl = $("#subs");
-  subsEl.innerHTML = "";
-  subs.forEach(s => {
-    const row = document.createElement("div");
-    row.className = "subitem";
-    row.innerHTML = `
-      <div class="swatch" style="background:${s.hex}"></div>
-      <div class="nm">${escapeHtml(s.name)}</div>
-      <div class="pct">${pct(s)}%</div>
-    `;
-    subsEl.appendChild(row);
-  });
+      const subsEl = $("#subs");
+      subsEl.innerHTML = "";
+      subs.forEach(s => {
+        const row = document.createElement("div");
+        row.className = "subitem";
+        row.innerHTML = `
+          <div class="swatch" style="background:${s.hex}"></div>
+          <div class="nm">${escapeHtml(s.name)}</div>
+          <div class="pct">${pct(s)}%</div>
+        `;
+        subsEl.appendChild(row);
+      });
 
-const guideEl = $("#guideColors");
-guideEl.innerHTML = "";
+      const guideEl = $("#guideColors");
+      guideEl.innerHTML = "";
 
-const guideList = COLOR_GUIDE[main.key] || [];
+      const guideList = COLOR_GUIDE[main.key] || [];
 
-guideList.forEach(c => {
-  const row = document.createElement("div");
-  row.className = "subitem";
-  row.innerHTML = `
-    <div class="swatch" style="background:${c.hex}"></div>
-    <div class="nm">${escapeHtml(c.name)}</div>
-    <div class="pct">おすすめ</div>
-  `;
-  guideEl.appendChild(row);
-});
+      guideList.forEach(c => {
+        const row = document.createElement("div");
+        row.className = "subitem";
+        row.innerHTML = `
+          <div class="swatch" style="background:${c.hex}"></div>
+          <div class="nm">${escapeHtml(c.name)}</div>
+          <div class="pct">おすすめ</div>
+        `;
+        guideEl.appendChild(row);
+      });
 
-  $("#desc").innerHTML = `
-    <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
-    <div class="muted" style="margin-top:8px;">
-      サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
-    </div>
-  `;
+      $("#desc").innerHTML = `
+        <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
+        <div class="muted" style="margin-top:8px;">
+          サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
+        </div>
+      `;
 
-  $("#typeDesc").innerHTML = `<strong>${escapeHtml(main.typeCode)} / ${escapeHtml(main.typeName)}</strong><div class="muted" style="margin-top:4px;">${escapeHtml(main.typeDesc)}</div>`;
-  $("#strengths").innerHTML = main.strengths.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
-  $("#weaknesses").innerHTML = main.weaknesses.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+      $("#typeDesc").innerHTML = `<strong>${escapeHtml(main.typeCode)} / ${escapeHtml(main.typeName)}</strong><div class="muted" style="margin-top:4px;">${escapeHtml(main.typeDesc)}</div>`;
+      $("#strengths").innerHTML = main.strengths.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+      $("#weaknesses").innerHTML = main.weaknesses.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
 
-  state._lastResult = { main, subs, pctMain: pct(main) };
-}
+      state._lastResult = { main, subs, pctMain: pct(main) };
+    }
 
     async function copyResult(){
       const r = state._lastResult;
