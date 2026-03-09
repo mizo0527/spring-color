@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>大人の春カラー診断</title>
   <meta name="description" content="8問でわかる｜大人の春カラー診断" />
+  <meta name="theme-color" content="#f6f7fb" />
   <style>
     :root{
       --bg1:#f6f7fb;
@@ -16,6 +17,10 @@
       --r:18px;
       --tap: rgba(17, 17, 17, .06);
       --accent:#111;
+      --result-bg-a: rgba(255, 182, 193,.40);
+      --result-bg-b: rgba(173, 216, 230,.45);
+      --result-bg-c: rgba(221, 160, 221,.35);
+      --result-bg-d: rgba(152, 251, 152,.30);
 
       --safe-b: env(safe-area-inset-bottom, 0px);
       --safe-t: env(safe-area-inset-top, 0px);
@@ -43,6 +48,15 @@
         radial-gradient(1100px 900px at 85% 85%, rgba(152, 251, 152,.30), transparent 60%),
         linear-gradient(180deg, #fbfbff 0%, #f6f7fb 35%, #f8f6fb 100%);
       filter: saturate(1.05);
+      transition: background .5s ease;
+    }
+    body.result-tone .bg{
+      background:
+        radial-gradient(1200px 900px at 15% 10%, var(--result-bg-a), transparent 55%),
+        radial-gradient(1100px 900px at 85% 20%, var(--result-bg-b), transparent 55%),
+        radial-gradient(1100px 900px at 25% 90%, var(--result-bg-c), transparent 60%),
+        radial-gradient(1100px 900px at 85% 85%, var(--result-bg-d), transparent 60%),
+        linear-gradient(180deg, #fcfcff 0%, #f8f8fc 35%, #faf8fc 100%);
     }
     /* add subtle paper grain */
     .bg::after{
@@ -63,42 +77,6 @@
       padding: calc(14px + var(--safe-t)) 14px calc(20px + var(--safe-b));
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin: 4px 0 14px;
-    }
-
-    .title{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      line-height:1.15;
-    }
-    .title h1{
-      margin:0;
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing:.01em;
-    }
-    .title .sub{
-      color:var(--muted);
-      font-size: 12px;
-    }
-
-    .tag{
-      font-size:12px;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.72);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 6px 18px rgba(16,24,40,.06);
-      white-space:nowrap;
-    }
-
     .card{
       background: rgba(255,255,255,.88);
       border:1px solid var(--line);
@@ -114,20 +92,33 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 8px;
     }
-
+    .quiz-logo-wrap{
+      margin: 0 auto;
+      width:100%;
+      max-width: 760px;
+      overflow: visible;
+    }
+    .quiz-logo-wide{
+      width:110%;
+      max-width:760px;
+      display:block;
+      height:auto;
+      object-fit:contain;
+      margin: 6px auto 14px;
+    }
     .postcard{
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.86);
+      background: rgba(255,255,255,.88);
       padding: 14px;
       box-shadow: 0 10px 22px rgba(16,24,40,.08);
     }
 
     .postcard h2{
-      margin:0 0 6px;
-      font-size: 18px;
+      margin:0 0 8px;
+      font-size: 17px;
       font-weight: 800;
       letter-spacing:.01em;
     }
@@ -135,11 +126,14 @@
       margin:0;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
     .illus{
-      height: 180px;
+      position:relative;
+      height: 56vh;
+      min-height: 300px;
+      max-height: 520px;
       border-radius: 16px;
       border: 1px dashed rgba(16,24,40,.18);
       background:
@@ -149,9 +143,29 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
       color: rgba(16,24,40,.45);
       font-size: 12px;
       letter-spacing:.02em;
+    }
+    .hero-visual{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      border-radius: inherit;
+      position:relative;
+      z-index:1;
+    }
+    .illus-fallback{
+      position:absolute;
+      inset:auto 0 12px 0;
+      text-align:center;
+      color: rgba(16,24,40,.45);
+      font-size: 12px;
+      letter-spacing:.02em;
+      pointer-events:none;
+      z-index:0;
     }
 
     .btn{
@@ -178,12 +192,19 @@
       color: var(--text);
       border:1px solid var(--line);
     }
+    .btn.start-btn{
+      background: linear-gradient(135deg, #111 0%, #2e2e2e 100%);
+      border-color: rgba(17,17,17,.2);
+      min-height: 52px;
+      font-size: 15px;
+      box-shadow: 0 14px 24px rgba(17,17,17,.22);
+    }
 
     .row{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top: 12px;
+      margin-top: 2px;
     }
     .row .btn{ flex:1; min-width: 180px; }
 
@@ -206,6 +227,24 @@
       justify-content:space-between;
       gap: 12px;
       margin-bottom: 12px;
+    }
+    .progress-wrap{
+      margin-bottom: 14px;
+    }
+    .progress-track{
+      width:100%;
+      height:8px;
+      border-radius:999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      overflow:hidden;
+    }
+    .progress-bar{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(17,17,17,.78), rgba(17,17,17,.56));
+      transition: width .24s ease;
     }
 
     .qcount{
@@ -434,9 +473,21 @@
       color: var(--muted);
     }
     .result-name .v{
+      display:flex;
+      align-items:center;
+      gap:8px;
       font-size: 20px;
       font-weight: 950;
       letter-spacing:.01em;
+    }
+    .main-dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(16,24,40,.16);
+      box-shadow: 0 2px 8px rgba(16,24,40,.18);
+      background:#fff;
+      flex:0 0 auto;
     }
 
     .subs{
@@ -481,6 +532,31 @@
     }
     .desc .muted{
       color: var(--muted);
+    }
+    .result-grid{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .result-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 16px rgba(16,24,40,.05);
+    }
+    .result-card h3{
+      margin:0 0 8px;
+      font-size:13px;
+      letter-spacing:.02em;
+    }
+    .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+    .chip{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.85);
     }
 
     .toast{
@@ -531,35 +607,24 @@
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
 
-    <header>
-      <div class="title">
-        <h1>大人の春カラー診断</h1>
-        <div class="sub">ポストカード風｜画像は後で差し替えOK</div>
-      </div>
-      <div class="tag">8問でわかる</div>
-    </header>
-
     <!-- TOP -->
     <section id="screenTop" class="screen active">
       <div class="card">
         <div class="card-inner hero">
+          <div class="illus">
+            <img src="IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async" />
+            <span class="illus-fallback" aria-hidden="true">メインビジュアル</span>
+          </div>
+
           <div class="postcard">
-            <h2>あなたに似合う「春の大人カラー」</h2>
+            <h2>あなたに似合う春カラーのヒント</h2>
             <p>
-              8つの質問に答えるだけで、今のあなたにフィットするカラー傾向がわかります。<br/>
-              <span class="muted">※イラストは後で差し替え（今はプレースホルダー）</span>
+              8つの質問に答えるだけで、今のあなたにフィットする春カラーの傾向を分かりやすく提案します。
             </p>
           </div>
 
-          <div class="illus">（ここに女性イラスト：後で差し替え）</div>
-
           <div class="row">
-            <button class="btn" id="btnStart">診断をはじめる</button>
-          </div>
-
-          <div class="small">
-            ・タップで次へ（0.2秒ハイライト→軽いスライド）<br/>
-            ・8問後に「結果を見る／もう少し詳しく（追加4問）」が選べます
+            <button class="btn start-btn" id="btnStart">診断をはじめる</button>
           </div>
         </div>
       </div>
@@ -569,9 +634,15 @@
     <section id="screenQuiz" class="screen">
       <div class="card">
         <div class="card-inner">
+          <div class="quiz-logo-wrap">
+            <img src="spring_banner.png" alt="春カラー診断バナー" class="quiz-logo-wide" loading="lazy" decoding="async" />
+          </div>
           <div class="quiz-top">
             <div class="qcount" id="qcount"></div>
             <div class="dots" id="dots"></div>
+          </div>
+          <div class="progress-wrap" aria-label="進捗">
+            <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
           </div>
 
           <div id="slide" class="slide">
@@ -642,8 +713,8 @@
           <div class="result-top">
             <div class="mainball" id="mainball" aria-label="main color"></div>
             <div class="result-name">
-              <div class="k">あなたのメインカラー</div>
-              <div class="v" id="mainName">—</div>
+              <div class="k">あなたの春カラー</div>
+              <div class="v"><span id="mainName">—</span><span class="main-dot" id="mainDot" aria-hidden="true"></span></div>
               <div class="k" id="mainHint">—</div>
             </div>
           </div>
@@ -658,6 +729,20 @@
 
 <div class="subs" id="guideColors"></div>
           <div class="desc" id="desc"></div>
+          <div class="result-grid">
+            <div class="result-card">
+              <h3>タイプ</h3>
+              <div id="typeDesc"></div>
+            </div>
+            <div class="result-card">
+              <h3>長所</h3>
+              <div class="chip-row" id="strengths"></div>
+            </div>
+            <div class="result-card">
+              <h3>弱点（ケアポイント）</h3>
+              <div class="chip-row" id="weaknesses"></div>
+            </div>
+          </div>
 
           <div class="footer-actions">
             <button class="btn" id="btnCopy">結果をコピー</button>
@@ -665,7 +750,7 @@
           </div>
 
           <div class="small">
-            ※結果文は簡易版です。売場用途に合わせて、後で文章を差し替えできます。
+            ※この診断は自己理解を楽しむための目安です。肌色・髪色・素材感や光の当たり方で見え方は変わります。
           </div>
         </div>
       </div>
@@ -673,7 +758,7 @@
 
   </div>
 
-  <div class="toast" id="toast">コピーしました</div>
+  <div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
 
   <script>
     /**************************************************************
@@ -685,6 +770,12 @@
         name: "さくらピンク",
         hex: "#f3a8b8",
         watercolor: ["rgba(243,168,184,.85)","rgba(255,213,225,.65)","rgba(221,160,221,.55)"],
+        bgTone: ["rgba(243,168,184,.35)","rgba(255,213,225,.5)","rgba(221,160,221,.32)","rgba(255,240,245,.5)"],
+        typeCode: "ESFJ",
+        typeName: "Bloom Harmonizer",
+        typeDesc: "空気をやわらかく整える調和型。やさしい華やかさで、相手の緊張を自然にほぐします。",
+        strengths: ["親しみやすい", "血色感アップが得意", "第一印象で好感を得やすい"],
+        weaknesses: ["甘く見えやすい", "ぼやけやすい", "輪郭が弱くなることがある"],
         hint: "やわらかい華やかさが得意",
         desc: "親しみやすい印象をつくるのが上手。春は淡いトーンで“抜け感”を出すと、品よく明るく見えます。"
       },
@@ -693,6 +784,12 @@
         name: "ミントグリーン",
         hex: "#8fe1c7",
         watercolor: ["rgba(143,225,199,.85)","rgba(152,251,152,.55)","rgba(173,216,230,.55)"],
+        bgTone: ["rgba(143,225,199,.34)","rgba(152,251,152,.38)","rgba(173,216,230,.36)","rgba(235,252,246,.62)"],
+        typeCode: "ISTP",
+        typeName: "Clean Strategist",
+        typeDesc: "軽やかに整えて魅せる実務派。清潔感とスマートさで、信頼を積み上げるタイプです。",
+        strengths: ["清潔感が高い", "軽快に見える", "ミニマルに強い"],
+        weaknesses: ["冷たく見える時がある", "印象が薄くなる場合がある", "無難に寄りすぎる"],
         hint: "清潔感と軽さが武器",
         desc: "すっきり・爽やかに見せたい時の味方。白や生成りと合わせると、春らしい透明感が出ます。"
       },
@@ -701,6 +798,12 @@
         name: "ラベンダー",
         hex: "#c4a3ff",
         watercolor: ["rgba(196,163,255,.85)","rgba(221,160,221,.55)","rgba(173,216,230,.55)"],
+        bgTone: ["rgba(196,163,255,.33)","rgba(221,160,221,.34)","rgba(173,216,230,.32)","rgba(246,241,255,.62)"],
+        typeCode: "INFJ",
+        typeName: "Quiet Elegance",
+        typeDesc: "静かな存在感を放つ品格型。落ち着いたムードの中に、凛とした芯を感じさせます。",
+        strengths: ["上品に見える", "大人っぽさが出る", "印象に奥行きが出る"],
+        weaknesses: ["重く見えやすい", "近寄りがたく映る", "顔色が沈むことがある"],
         hint: "上品さと芯の強さ",
         desc: "落ち着きの中に、少しミステリアスな魅力。グレーやネイビーと合わせると“大人っぽい春”になります。"
       },
@@ -709,6 +812,12 @@
         name: "スカイブルー",
         hex: "#7fb9ff",
         watercolor: ["rgba(127,185,255,.85)","rgba(173,216,230,.60)","rgba(255,255,255,.45)"],
+        bgTone: ["rgba(127,185,255,.32)","rgba(173,216,230,.36)","rgba(205,232,255,.35)","rgba(241,248,255,.62)"],
+        typeCode: "ENTJ",
+        typeName: "Fresh Navigator",
+        typeDesc: "知的で軽快な先導型。フレッシュな透明感で、きちんと感と抜け感を両立します。",
+        strengths: ["知的に見える", "信頼感がある", "春らしい軽さを作りやすい"],
+        weaknesses: ["硬く見えやすい", "無機質に映る", "冷えた印象になりがち"],
         hint: "知的でフレッシュ",
         desc: "軽快で信頼感のある印象。シャツ系・デニム・ライトグレーと相性がよく、春の定番として使いやすいです。"
       },
@@ -717,6 +826,12 @@
         name: "シアーベージュ",
         hex: "#d9c7a6",
         watercolor: ["rgba(217,199,166,.85)","rgba(255,244,224,.65)","rgba(173,216,230,.35)"],
+        bgTone: ["rgba(217,199,166,.34)","rgba(255,244,224,.52)","rgba(220,210,188,.34)","rgba(250,245,235,.62)"],
+        typeCode: "ISFJ",
+        typeName: "Warm Minimalist",
+        typeDesc: "安心感を生む包容型。余白を活かした装いで、大人の余裕を自然に表現できます。",
+        strengths: ["安心感がある", "素材感を活かせる", "合わせやすさが高い"],
+        weaknesses: ["地味に見えやすい", "ぼんやりする", "華やぎが不足しやすい"],
         hint: "大人の余裕と安心感",
         desc: "ナチュラルで整った雰囲気が出るタイプ。春はベージュ×淡色で“やさしい大人感”が作れます。"
       }
@@ -943,7 +1058,8 @@ const COLOR_GUIDE = {
       // Qx/8 display: show /8 for first 8, and /12 when extra is active (optional)
       const base = baseCount();
       const denom = state.useExtra ? (base + 4) : base;
-      $("#qcount").innerHTML = `<strong>Q${qNo}</strong> / ${denom}`;
+      $("#qcount").innerHTML = `<strong>${qNo}</strong> / ${denom}`;
+      $("#progressBar").style.width = `${Math.min((qNo / denom) * 100, 100)}%`;
 
       renderDots(state.idx);
 
@@ -1043,6 +1159,9 @@ const COLOR_GUIDE = {
       state.answers = [];
       state.scores = initScores();
       state.activeList = buildList(false);
+      document.body.classList.remove("result-tone");
+      const p = $("#progressBar");
+      if(p) p.style.width = "0%";
     }
 
     async function showLoadingThenResult(){
@@ -1073,6 +1192,12 @@ const COLOR_GUIDE = {
 
   $("#mainName").textContent = main.name;
   $("#mainHint").textContent = main.hint;
+  $("#mainDot").style.background = main.hex;
+  document.body.classList.add("result-tone");
+  document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
+  document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
+  document.body.style.setProperty("--result-bg-c", main.bgTone[2]);
+  document.body.style.setProperty("--result-bg-d", main.bgTone[3]);
 
   const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
   const pct = (x) => Math.round((x.score / sumTop4) * 100);
@@ -1115,17 +1240,23 @@ guideList.forEach(c => {
     </div>
   `;
 
+  $("#typeDesc").innerHTML = `<strong>${escapeHtml(main.typeCode)} / ${escapeHtml(main.typeName)}</strong><div class="muted" style="margin-top:4px;">${escapeHtml(main.typeDesc)}</div>`;
+  $("#strengths").innerHTML = main.strengths.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+  $("#weaknesses").innerHTML = main.weaknesses.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+
   state._lastResult = { main, subs, pctMain: pct(main) };
 }
 
     async function copyResult(){
       const r = state._lastResult;
+      if(!r) return;
       const lines = [
         "【大人の春カラー診断】",
         `メイン：${r.main.name}`,
         `サブ：${r.subs.map(s=>s.name).join(" / ")}`,
         "",
-        `ひとこと：${r.main.hint}`,
+        `おすすめポイント：${r.main.hint}`,
+        `タイプ：${r.main.typeCode} / ${r.main.typeName}`
       ].join("\n");
 
       try{
