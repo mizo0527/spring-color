@@ -94,9 +94,15 @@
       grid-template-columns: 1fr;
       gap: 10px;
     }
-    .quiz-logo-wide{
-      width:110%;
-      max-width:760px;
+    .quiz-logo-wrap{
+      margin: 0 auto 10px;
+      width:100%;
+      display:flex;
+      justify-content:center;
+    }
+    .quiz-logo{
+      width:100%;
+      max-width:640px;
       display:block;
       height:auto;
       object-fit:contain;
@@ -635,7 +641,9 @@
     <section id="screenQuiz" class="screen">
       <div class="card">
         <div class="card-inner">
-          <img src="./spring_banner.png" alt="春カラー診断バナー" class="quiz-logo-wide" loading="lazy" decoding="async" />
+          <div class="quiz-logo-wrap">
+            <img src="./spring_banner.png" alt="春カラー診断バナー" class="quiz-logo" loading="lazy" decoding="async" />
+          </div>
           <div class="quiz-top">
             <div class="qcount" id="qcount"></div>
             <div class="dots" id="dots"></div>
