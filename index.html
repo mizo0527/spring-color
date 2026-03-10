@@ -128,46 +128,14 @@
       font-size: 13px;
       line-height: 1.7;
     }
-
-    .illus{
-      position:relative;
-      height: 56vh;
-      min-height: 300px;
-      max-height: 520px;
-      border-radius: 16px;
-      border: 1px dashed rgba(16,24,40,.18);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40)),
-        radial-gradient(300px 240px at 30% 40%, rgba(255, 182, 193,.35), transparent 65%),
-        radial-gradient(300px 240px at 70% 60%, rgba(173, 216, 230,.35), transparent 65%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 0;
-      overflow:hidden;
-      color: rgba(16,24,40,.45);
-      font-size: 12px;
-      letter-spacing:.02em;
-    }
     .hero-visual{
       width:100%;
       height:auto;
       display:block;
-      margin: 0 auto;
-      border-radius: inherit;
-      position:relative;
-      z-index:1;
+      margin:0 auto;
+      border-radius:16px;
     }
-    .illus-fallback{
-      position:absolute;
-      inset:auto 0 12px 0;
-      text-align:center;
-      color: rgba(16,24,40,.45);
-      font-size: 12px;
-      letter-spacing:.02em;
-      pointer-events:none;
-      z-index:0;
-    }
+
 
     .btn{
       width:100%;
@@ -611,16 +579,16 @@
     <!-- TOP -->
     <section id="screenTop" class="screen active">
       <div class="card">
-        <div class="card-inner hero">
-          <div class="illus">
-            <img src="IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async" />
-            <span class="illus-fallback" aria-hidden="true">メインビジュアル</span>
+        <div class="card-inner">
+          <div class="hero">
+            <img src="./IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async">
           </div>
 
           <div class="postcard">
             <h2>あなたに似合う春カラーのヒント</h2>
             <p>
-              8つの質問に答えるだけで、今のあなたにフィットする春カラーの傾向を分かりやすく提案します。
+              スマホで8つの質問に答えるだけ。今のあなたにフィットする春カラーの傾向を、
+              分かりやすく提案します。
             </p>
           </div>
 
@@ -636,7 +604,7 @@
       <div class="card">
         <div class="card-inner">
           <div class="quiz-logo-wrap">
-            <img src="spring_banner.png" alt="春カラー診断バナー" class="quiz-logo-wide" loading="lazy" decoding="async" />
+            <img src="./spring_banner.png" alt="春カラー診断バナー" class="quiz-logo-wide" loading="lazy" decoding="async" />
           </div>
           <div class="quiz-top">
             <div class="qcount" id="qcount"></div>
