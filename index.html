@@ -102,7 +102,7 @@
     }
     .quiz-logo{
       width:100%;
-      max-width:640px;
+      max-width:420px;
       display:block;
       height:auto;
       object-fit:contain;
@@ -147,6 +147,15 @@
     }
     #screenTop .card{
       width:100%;
+      display:flex;
+      align-items:center;
+    }
+    #screenTop .card-inner{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height: clamp(560px, 76vh, 760px);
     }
     /* --- TOP only tweaks (mobile-first) --- */
     #screenTop .card-inner{
