@@ -132,6 +132,16 @@
 
 
 
+
+    #screenTop.active{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: calc(100dvh - (14px + var(--safe-t)) - (20px + var(--safe-b)));
+    }
+    #screenTop .card{
+      width:100%;
+    }
     /* --- TOP only tweaks (mobile-first) --- */
     #screenTop .card-inner{
       padding: 12px;
