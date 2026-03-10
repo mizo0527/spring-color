@@ -131,6 +131,34 @@
     }
 
 
+
+    /* --- TOP only tweaks (mobile-first) --- */
+    #screenTop .card-inner{
+      padding: 12px;
+    }
+    #screenTop .hero{
+      gap: 6px;
+    }
+    #screenTop .hero-visual{
+      width: 108%;
+      max-width: none;
+      margin: 0 auto 0 -4%;
+    }
+    #screenTop .postcard{
+      margin-top: 4px;
+      padding: 12px;
+    }
+    #screenTop .row{
+      margin-top: 6px;
+    }
+
+    @media (min-width: 768px){
+      #screenTop .card-inner{ padding: 14px; }
+      #screenTop .hero-visual{
+        width: 104%;
+        margin-left: -2%;
+      }
+    }
     .btn{
       width:100%;
       display:inline-flex;
