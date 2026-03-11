@@ -705,6 +705,67 @@
   line-height:1.65;
   color: var(--muted);
 }
+  .color-chip-btn{
+  appearance:none;
+  border:0;
+  background:transparent;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+}
+
+.color-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.38);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.color-modal.on{
+  display:flex;
+}
+
+.color-modal-card{
+  width:min(92vw, 360px);
+  background:#fff;
+  border-radius:22px;
+  padding:18px 18px 22px;
+  box-shadow:0 18px 40px rgba(0,0,0,.20);
+  text-align:center;
+  position:relative;
+}
+
+.color-modal-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  border:0;
+  background:transparent;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+  color:#666;
+}
+
+.color-modal-swatch{
+  width:min(58vw, 220px);
+  height:min(58vw, 220px);
+  margin:18px auto 14px;
+  border-radius:24px;
+  border:1px solid rgba(16,24,40,.14);
+  box-shadow:0 12px 28px rgba(16,24,40,.10);
+}
+
+.color-modal-name{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.4;
+}
+  
   
 </style>
 </head>
@@ -712,6 +773,14 @@
 <body>
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
+    
+    <div class="color-modal" id="colorModal" aria-hidden="true">
+  <div class="color-modal-card">
+    <button class="color-modal-close" id="colorModalClose" aria-label="閉じる">×</button>
+    <div class="color-modal-swatch" id="colorModalSwatch"></div>
+    <div class="color-modal-name" id="colorModalName">カラー名</div>
+  </div>
+</div>
 
     <!-- TOP -->
 <section id="screenTop" class="screen active">
@@ -1292,15 +1361,15 @@
       const guideList = COLOR_GUIDE[main.key] || [];
 
       guideList.forEach(c => {
-        const row = document.createElement("div");
-        row.className = "subitem";
-        row.innerHTML = `
-          <div class="swatch" style="background:${c.hex}"></div>
-          <div class="nm">${escapeHtml(c.name)}</div>
-          <div class="pct">おすすめ</div>
-        `;
-        guideEl.appendChild(row);
-      });
+  const row = document.createElement("div");
+  row.className = "subitem";
+  row.innerHTML = `
+    <button class="color-chip-btn swatch" style="background:${c.hex}" data-color="${c.hex}" data-name="${escapeHtml(c.name)}" aria-label="${escapeHtml(c.name)}を拡大表示"></button>
+    <div class="nm">${escapeHtml(c.name)}</div>
+    <div class="pct">タップで拡大</div>
+  `;
+  guideEl.appendChild(row);
+});
 
       $("#desc").innerHTML = `
         <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
@@ -1397,7 +1466,27 @@
       showScreen("top");
       toast("もう一度どうぞ");
     });
+document.addEventListener("click", (e)=>{
+  const btn = e.target.closest(".color-chip-btn");
+  if(!btn) return;
 
+  $("#colorModalSwatch").style.background = btn.dataset.color;
+  $("#colorModalName").textContent = btn.dataset.name;
+  $("#colorModal").classList.add("on");
+  $("#colorModal").setAttribute("aria-hidden", "false");
+});
+
+$("#colorModalClose").addEventListener("click", ()=>{
+  $("#colorModal").classList.remove("on");
+  $("#colorModal").setAttribute("aria-hidden", "true");
+});
+
+$("#colorModal").addEventListener("click", (e)=>{
+  if(e.target.id === "colorModal"){
+    $("#colorModal").classList.remove("on");
+    $("#colorModal").setAttribute("aria-hidden", "true");
+  }
+});
     resetAll();
   </script>
 </body>
