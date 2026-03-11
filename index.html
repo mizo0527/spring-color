@@ -124,6 +124,27 @@
       object-fit:contain;
     }
 
+
+    .postcard{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.88);
+      padding: 14px;
+      box-shadow: 0 10px 22px rgba(16,24,40,.08);
+    }
+
+    .postcard h2{
+      margin:0 0 8px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing:.01em;
+    }
+    .postcard p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
     #screenTop.active{
       min-height:100vh;
       display:flex;
@@ -582,6 +603,14 @@
         <div class="card-inner">
           <div class="illus">
             <img src="./IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async">
+          </div>
+
+          <div class="postcard">
+            <h2>あなたに似合う春カラーのヒント</h2>
+            <p>
+              スマホで8つの質問に答えるだけ。今のあなたにフィットする春カラーの傾向を、
+              分かりやすく提案します。
+            </p>
           </div>
 
           <div class="row">
