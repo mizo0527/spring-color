@@ -526,6 +526,55 @@
       font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
+    .guide-item{
+      width:100%;
+      text-align:left;
+      cursor:pointer;
+    }
+
+    .result-note{
+      margin-top:6px;
+      font-size:11px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .color-modal{
+      position:fixed;
+      inset:0;
+      z-index:60;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(17,17,17,.45);
+      backdrop-filter: blur(2px);
+    }
+    .color-modal.on{ display:flex; }
+    .color-modal-card{
+      width:min(92vw, 340px);
+      background:rgba(255,255,255,.98);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      box-shadow: 0 22px 44px rgba(0,0,0,.2);
+    }
+    .color-modal-swatch{
+      width:100%;
+      aspect-ratio:1.4/1;
+      border-radius:14px;
+      border:1px solid rgba(16,24,40,.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 22px rgba(16,24,40,.15);
+      background:#fff;
+    }
+    .color-modal-name{
+      margin-top:10px;
+      font-weight:900;
+      font-size:16px;
+      text-align:center;
+    }
+    .color-modal-actions{ margin-top:12px; }
+    .color-modal-actions .btn{ width:100%; }
 
     .desc{
       margin-top: 14px;
@@ -717,11 +766,10 @@
             </div>
           </div>
 
-          <div class="subs" id="subs"></div>
 <div class="desc" style="margin-top:14px;">
   <strong>合わせやすいおすすめ配色</strong>
   <div class="muted" style="margin-top:4px;">
-    メインカラーに足しやすい色を集めました。小物や靴下、バッグからでも取り入れやすいです。
+    メインカラーに足しやすい色を集めました。タップすると色を拡大して確認できます。
   </div>
 </div>
 
@@ -729,7 +777,8 @@
           <div class="desc" id="desc"></div>
           <div class="result-grid">
             <div class="result-card">
-              <h3>タイプ</h3>
+              <h3>タイプ / MBTI参考</h3>
+              <div class="result-note">※MBTIは性格傾向を4つの軸で見た分類のひとつです。ここでは「色の雰囲気を伝えるための参考ラベル」として簡易表示しています。</div>
               <div id="typeDesc"></div>
             </div>
             <div class="result-card">
@@ -757,6 +806,16 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
+
+  <div class="color-modal" id="colorModal" aria-hidden="true">
+    <div class="color-modal-card" role="dialog" aria-modal="true" aria-labelledby="modalColorName">
+      <div class="color-modal-swatch" id="modalColorSwatch"></div>
+      <div class="color-modal-name" id="modalColorName">—</div>
+      <div class="color-modal-actions">
+        <button class="btn secondary" id="btnCloseColorModal" type="button">閉じる</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     /**************************************************************
@@ -1200,20 +1259,6 @@ const COLOR_GUIDE = {
   const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
   const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-  // 診断サブカラー
-  const subsEl = $("#subs");
-  subsEl.innerHTML = "";
-  subs.forEach(s => {
-    const row = document.createElement("div");
-    row.className = "subitem";
-    row.innerHTML = `
-      <div class="swatch" style="background:${s.hex}"></div>
-      <div class="nm">${escapeHtml(s.name)}</div>
-      <div class="pct">${pct(s)}%</div>
-    `;
-    subsEl.appendChild(row);
-  });
-
   // 合わせやすいおすすめ配色
 const guideEl = $("#guideColors");
 guideEl.innerHTML = "";
@@ -1221,12 +1266,15 @@ guideEl.innerHTML = "";
 const guideList = COLOR_GUIDE[main.key] || [];
 
 guideList.forEach(c => {
-  const row = document.createElement("div");
-  row.className = "subitem";
+  const row = document.createElement("button");
+  row.type = "button";
+  row.className = "subitem guide-item";
+  row.dataset.colorHex = c.hex;
+  row.dataset.colorName = c.name;
   row.innerHTML = `
     <div class="swatch" style="background:${c.hex}"></div>
     <div class="nm">${escapeHtml(c.name)}</div>
-    <div class="pct">おすすめ</div>
+    <div class="pct">タップで拡大</div>
   `;
   guideEl.appendChild(row);
 });
@@ -1281,6 +1329,22 @@ guideList.forEach(c => {
       toastTimer = setTimeout(()=> t.classList.remove("on"), 1200);
     }
 
+    const colorModal = $("#colorModal");
+    const modalColorSwatch = $("#modalColorSwatch");
+    const modalColorName = $("#modalColorName");
+
+    function openColorModal(name, hex){
+      modalColorName.textContent = name;
+      modalColorSwatch.style.background = hex;
+      colorModal.classList.add("on");
+      colorModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeColorModal(){
+      colorModal.classList.remove("on");
+      colorModal.setAttribute("aria-hidden", "true");
+    }
+
     /**************************************************************
      * イベント
      **************************************************************/
@@ -1327,6 +1391,22 @@ guideList.forEach(c => {
     });
 
     $("#btnCopy").addEventListener("click", copyResult);
+
+    $("#guideColors").addEventListener("click", (e)=>{
+      const btn = e.target.closest(".guide-item");
+      if(!btn) return;
+      openColorModal(btn.dataset.colorName || "", btn.dataset.colorHex || "#fff");
+    });
+
+    $("#btnCloseColorModal").addEventListener("click", closeColorModal);
+
+    colorModal.addEventListener("click", (e)=>{
+      if(e.target === colorModal) closeColorModal();
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && colorModal.classList.contains("on")) closeColorModal();
+    });
 
     $("#btnAgain").addEventListener("click", ()=>{
       resetAll();
