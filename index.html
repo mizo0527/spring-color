@@ -604,24 +604,47 @@
   </style>
   <style>
 
-/* 今あるCSSいっぱい */
+/* 既存CSSいっぱい */
 
-/* ---------------- */
-/* ここから追加 */
-/* ---------------- */
+@media (prefers-reduced-motion: reduce){
+  .screen.active{ animation:none; }
+  .slide.out, .slide.in{ animation:none; }
+  .btn, .choice, .branch{ transition:none; }
+  .bar > div{ animation:none; width:100%; }
+}
+
+/* ←ここに追加CSSを置く */
 
 .wrap{
   max-width: 860px;
   margin:0 auto;
-  padding: calc(0px + var(--safe-t)) 14px calc(20px + var(--safe-b)) !important;
+  padding: calc(0px + var(--safe-t)) 14px calc(12px + var(--safe-b)) !important;
+}
+
+#screenTop .card{
+  margin-top: 0 !important;
 }
 
 #screenTop .card-inner{
-  padding: 4px 16px 8px !important;
+  padding: 6px 16px 8px !important;
+}
+
+#screenTop .hero{
+  gap: 8px !important;
+}
+
+#screenTop .illus{
+  margin-bottom: 0 !important;
+}
+
+#screenTop .hero-visual{
+  display: block;
+  margin: 0 !important;
 }
 
 .postcard.badge-only{
   padding: 12px 14px !important;
+  margin: 0 !important;
   text-align: center;
   background: #fff0f6 !important;
   border: 2px solid #d6739c !important;
@@ -635,6 +658,10 @@
   font-weight: 900 !important;
   letter-spacing: .02em !important;
   color: #b03a64 !important;
+}
+
+#screenTop .row{
+  margin-top: 0 !important;
 }
 
 </style>
