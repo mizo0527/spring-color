@@ -92,7 +92,13 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 10px;
+      gap: 6px;
+    }
+    .illus{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
     }
     .quiz-logo-wrap{
       margin: 0 auto 10px;
@@ -107,26 +113,6 @@
       height:auto;
       object-fit:contain;
       margin: 0 auto 12px;
-    }
-    .postcard{
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.88);
-      padding: 14px;
-      box-shadow: 0 10px 22px rgba(16,24,40,.08);
-    }
-
-    .postcard h2{
-      margin:0 0 8px;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing:.01em;
-    }
-    .postcard p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
     }
     .hero-visual{
       width:100%;
@@ -577,28 +563,6 @@
       line-height: 1.6;
       margin-top: 10px;
     }
-
-
-    #screenTop .event-card{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:52px;
-      padding:13px 14px;
-      border-radius:14px;
-      border:1px solid rgba(17,17,17,.18);
-      background: linear-gradient(135deg,#111 0%,#2e2e2e 100%);
-      color:#fff;
-      font-weight:800;
-      font-size:15px;
-      letter-spacing:.01em;
-      box-shadow:0 14px 24px rgba(17,17,17,.22);
-    }
-
-    #screenTop .hero{
-      gap:12px;
-    }
     @media (prefers-reduced-motion: reduce){
       .screen.active{ animation:none; }
       .slide.out, .slide.in{ animation:none; }
@@ -616,19 +580,8 @@
     <section id="screenTop" class="screen active">
       <div class="card">
         <div class="card-inner">
-          <div class="hero">
-            <div class="event-card">
-久宝寺駅前限定・3月31日まで開催！
-</div>
+          <div class="illus">
             <img src="./IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async">
-          </div>
-
-          <div class="postcard">
-            <h2>あなたに似合う春カラーのヒント</h2>
-            <p>
-              スマホで8つの質問に答えるだけ。今のあなたにフィットする春カラーの傾向を、
-              分かりやすく提案します。
-            </p>
           </div>
 
           <div class="row">
