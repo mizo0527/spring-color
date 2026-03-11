@@ -812,7 +812,7 @@
             </div>
           </div>
 
-          <div class="subs" id="subs"></div>
+          
 <div class="desc" style="margin-top:14px;">
   <strong>合わせやすいおすすめ配色</strong>
   <div class="muted" style="margin-top:4px;">
@@ -1275,18 +1275,6 @@
       const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
       const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-      const subsEl = $("#subs");
-      subsEl.innerHTML = "";
-      subs.forEach(s => {
-        const row = document.createElement("div");
-        row.className = "subitem";
-        row.innerHTML = `
-          <div class="swatch" style="background:${s.hex}"></div>
-          <div class="nm">${escapeHtml(s.name)}</div>
-          <div class="pct">${pct(s)}%</div>
-        `;
-        subsEl.appendChild(row);
-      });
 
       const guideEl = $("#guideColors");
       guideEl.innerHTML = "";
