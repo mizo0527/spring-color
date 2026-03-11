@@ -765,7 +765,17 @@
   font-weight:900;
   line-height:1.4;
 }
-  
+  .mainball{
+  cursor:pointer;
+}
+
+.mainball:active{
+  transform: scale(.98);
+}
+
+.main-dot{
+  cursor:pointer;
+}
   
 </style>
 </head>
@@ -1338,13 +1348,19 @@
       const subs = entries.slice(1,4);
 
       const ball = $("#mainball");
-      ball.style.setProperty("--mainColorA", main.watercolor[0]);
-      ball.style.setProperty("--mainColorB", main.watercolor[1]);
-      ball.style.setProperty("--mainColorC", main.watercolor[2]);
+ball.style.setProperty("--mainColorA", main.watercolor[0]);
+ball.style.setProperty("--mainColorB", main.watercolor[1]);
+ball.style.setProperty("--mainColorC", main.watercolor[2]);
+ball.dataset.color = main.hex;
+ball.dataset.name = main.name;
 
-      $("#mainName").textContent = main.name;
-      $("#mainHint").textContent = main.hint;
-      $("#mainDot").style.background = main.hex;
+$("#mainName").textContent = main.name;
+$("#mainHint").textContent = main.hint;
+
+const mainDot = $("#mainDot");
+mainDot.style.background = main.hex;
+mainDot.dataset.color = main.hex;
+mainDot.dataset.name = main.name;
       document.body.classList.add("result-tone");
       document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
       document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
@@ -1467,7 +1483,7 @@
       toast("もう一度どうぞ");
     });
 document.addEventListener("click", (e)=>{
-  const btn = e.target.closest(".color-chip-btn");
+  const btn = e.target.closest(".color-chip-btn, #mainball, #mainDot");
   if(!btn) return;
 
   $("#colorModalSwatch").style.background = btn.dataset.color;
