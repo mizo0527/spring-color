@@ -36,7 +36,6 @@
       overflow-x:hidden;
     }
 
-    /* --- Watercolor-ish background (CSS only) --- */
     .bg{
       position:fixed;
       inset:0;
@@ -58,7 +57,6 @@
         radial-gradient(1100px 900px at 85% 85%, var(--result-bg-d), transparent 60%),
         linear-gradient(180deg, #fcfcff 0%, #f8f8fc 35%, #faf8fc 100%);
     }
-    /* add subtle paper grain */
     .bg::after{
       content:"";
       position:absolute;
@@ -92,81 +90,51 @@
     .hero{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 10px;
+      gap: 6px;
+    }
+    .illus{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
     }
     .quiz-logo-wrap{
+      margin: 0 auto 10px;
+      width:100%;
       display:flex;
       justify-content:center;
-      margin-bottom: 10px;
     }
-   .quiz-logo{
-  width:100%;
-  max-width:420px;
-  height:auto;
-  display:block;
-  margin:0 auto 12px;
-  object-fit:contain;
-  opacity:.94;
-}
-    .postcard{
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.88);
-      padding: 14px;
-      box-shadow: 0 10px 22px rgba(16,24,40,.08);
+    .quiz-logo{
+      width:100%;
+      max-width:420px;
+      display:block;
+      height:auto;
+      object-fit:contain;
+      margin: 0 auto 12px;
     }
-
-    .postcard h2{
-      margin:0 0 8px;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing:.01em;
-    }
-    .postcard p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .illus{
-  position:relative;
-  border-radius:16px;
-  border:1px dashed rgba(16,24,40,.18);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40)),
-    radial-gradient(300px 240px at 30% 40%, rgba(255, 182, 193,.35), transparent 65%),
-    radial-gradient(300px 240px at 70% 60%, rgba(173, 216, 230,.35), transparent 65%);
-  overflow:hidden;
-}
-
-.hero-visual{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius: inherit;
-}
-
-#screenTop .card-inner{
-  padding: 16px 16px 10px;
-}
     .hero-visual{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius: inherit;
-  position:relative;
-  z-index:1;
-}
-    .illus-fallback{
-      position:absolute;
-      inset:auto 0 12px 0;
-      text-align:center;
-      color: rgba(16,24,40,.45);
-      font-size: 12px;
-      letter-spacing:.02em;
-      pointer-events:none;
-      z-index:0;
+      width:100%;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      border-radius:16px;
+      max-height:60vh;
+      object-fit:contain;
+    }
+
+    #screenTop.active{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    #screenTop .card{
+      width:100%;
+    }
+
+    #screenTop .card-inner{
+      padding:30px 16px;
     }
 
     .btn{
@@ -209,7 +177,6 @@
     }
     .row .btn{ flex:1; min-width: 180px; }
 
-    /* --- Quiz area --- */
     .screen{
       display:none;
     }
@@ -229,9 +196,7 @@
       gap: 12px;
       margin-bottom: 12px;
     }
-    .progress-wrap{
-      margin-bottom: 14px;
-    }
+    .progress-wrap{ margin-bottom: 14px; }
     .progress-track{
       width:100%;
       height:8px;
@@ -248,14 +213,8 @@
       transition: width .24s ease;
     }
 
-    .qcount{
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .qcount strong{
-      color: var(--text);
-      font-weight: 900;
-    }
+    .qcount{ font-size: 12px; color: var(--muted); }
+    .qcount strong{ color: var(--text); font-weight: 900; }
 
     .dots{
       display:flex;
@@ -282,10 +241,7 @@
       line-height: 1.35;
     }
 
-    .choices{
-      display:grid;
-      gap: 10px;
-    }
+    .choices{ display:grid; gap: 10px; }
     .choice{
       border-radius: 16px;
       border: 1px solid var(--line);
@@ -325,16 +281,9 @@
       border-color: rgba(17,17,17,.18);
     }
 
-    /* slide transition wrapper */
-    .slide{
-      will-change: transform, opacity;
-    }
-    .slide.out{
-      animation: slideOut .18s ease both;
-    }
-    .slide.in{
-      animation: slideIn .18s ease both;
-    }
+    .slide{ will-change: transform, opacity; }
+    .slide.out{ animation: slideOut .18s ease both; }
+    .slide.in{ animation: slideIn .18s ease both; }
     @keyframes slideOut{
       from{ opacity:1; transform: translateX(0); }
       to{ opacity:0; transform: translateX(-10px); }
@@ -344,12 +293,7 @@
       to{ opacity:1; transform: translateX(0); }
     }
 
-    /* --- Branch --- */
-    .branch-options{
-      display:grid;
-      gap:10px;
-      margin-top: 10px;
-    }
+    .branch-options{ display:grid; gap:10px; margin-top: 10px; }
     .branch{
       display:flex;
       align-items:center;
@@ -366,19 +310,9 @@
       transition: background .18s ease, border-color .18s ease, transform .06s ease;
     }
     .branch:active{ transform: scale(.995); }
-    .branch .left{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .branch .t{
-      font-weight: 900;
-      font-size: 14px;
-    }
-    .branch .d{
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .branch .left{ display:flex; flex-direction:column; gap:4px; }
+    .branch .t{ font-weight: 900; font-size: 14px; }
+    .branch .d{ font-size: 12px; color: var(--muted); }
     .arrow{
       font-weight: 900;
       color: rgba(17,17,17,.55);
@@ -388,7 +322,6 @@
       background: rgba(255,255,255,.9);
     }
 
-    /* --- Loading --- */
     .loading{
       display:flex;
       flex-direction:column;
@@ -410,9 +343,7 @@
       background: rgba(17,17,17,.86);
       animation: fill 1.2s ease forwards;
     }
-    @keyframes fill{
-      to{ width: 100%; }
-    }
+    @keyframes fill{ to{ width: 100%; } }
     .loading p{
       margin:0;
       color: var(--muted);
@@ -420,7 +351,6 @@
       line-height: 1.65;
     }
 
-    /* --- Result --- */
     .result-top{
       display:flex;
       align-items:center;
@@ -438,7 +368,6 @@
       overflow:hidden;
       background: rgba(255,255,255,.90);
     }
-    /* watercolor inside the circle */
     .mainball::before{
       content:"";
       position:absolute;
@@ -469,10 +398,7 @@
       min-width: 220px;
       flex: 1;
     }
-    .result-name .k{
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .result-name .k{ font-size: 12px; color: var(--muted); }
     .result-name .v{
       display:flex;
       align-items:center;
@@ -491,11 +417,7 @@
       flex:0 0 auto;
     }
 
-    .subs{
-      display:grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
+    .subs{ display:grid; gap: 10px; margin-top: 14px; }
     .subitem{
       display:flex;
       align-items:center;
@@ -514,11 +436,7 @@
       box-shadow: 0 6px 14px rgba(16,24,40,.08);
       flex:0 0 auto;
     }
-    .subitem .nm{
-      flex:1;
-      font-weight: 800;
-      font-size: 13px;
-    }
+    .subitem .nm{ flex:1; font-weight: 800; font-size: 13px; }
     .subitem .pct{
       color: var(--muted);
       font-size: 12px;
@@ -531,14 +449,8 @@
       font-size: 13px;
       line-height: 1.75;
     }
-    .desc .muted{
-      color: var(--muted);
-    }
-    .result-grid{
-      display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
+    .desc .muted{ color: var(--muted); }
+    .result-grid{ display:grid; gap:10px; margin-top:14px; }
     .result-card{
       border:1px solid var(--line);
       border-radius:16px;
@@ -594,7 +506,6 @@
       line-height: 1.6;
       margin-top: 10px;
     }
-
     @media (prefers-reduced-motion: reduce){
       .screen.active{ animation:none; }
       .slide.out, .slide.in{ animation:none; }
@@ -611,10 +522,9 @@
     <!-- TOP -->
     <section id="screenTop" class="screen active">
       <div class="card">
-        <div class="card-inner hero">
+        <div class="card-inner">
           <div class="illus">
-           <img src="./IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async" />
-            <span class="illus-fallback" aria-hidden="true">メインビジュアル</span>
+            <img src="./IMG_5315.png" alt="春カラー診断メインビジュアル" class="hero-visual" loading="lazy" decoding="async">
           </div>
 
           <div class="row">
@@ -629,7 +539,7 @@
       <div class="card">
         <div class="card-inner">
           <div class="quiz-logo-wrap">
-           <img src="spring_banner.png" alt="Spring Color" class="quiz-logo" />
+            <img src="./spring_banner.png" alt="春カラー診断バナー" class="quiz-logo" loading="lazy" decoding="async" />
           </div>
           <div class="quiz-top">
             <div class="qcount" id="qcount"></div>
@@ -752,9 +662,12 @@
 
   </div>
 
-  <div class="toast" id="toast">コピーしました</div>
+  <div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
 
   <script>
+    /**************************************************************
+     * ここだけ差し替えればOK：質問と選択肢（仮で動く）
+     **************************************************************/
     const COLORS = {
       SAKURA: {
         key: "SAKURA",
@@ -827,45 +740,47 @@
         desc: "ナチュラルで整った雰囲気が出るタイプ。春はベージュ×淡色で“やさしい大人感”が作れます。"
       }
     };
-    const COLOR_GUIDE = {
-      SAKURA: [
-        { name: "ローズピンク", hex: "#d97c95" },
-        { name: "ピーチベージュ", hex: "#e8bfae" },
-        { name: "モーブ", hex: "#a67c9b" },
-        { name: "セージグリーン", hex: "#9caf88" },
-        { name: "ダスティブルー", hex: "#7f9db7" }
-      ],
-      MINT: [
-        { name: "ディープグリーン", hex: "#4f8f6b" },
-        { name: "セージグリーン", hex: "#9caf88" },
-        { name: "グレージュ", hex: "#b7aa98" },
-        { name: "ラベンダーグレー", hex: "#a79fb5" },
-        { name: "スモーキーブルー", hex: "#6f8fa8" }
-      ],
-      LAVENDER: [
-        { name: "プラム", hex: "#7f5a83" },
-        { name: "ダスティピンク", hex: "#c693a8" },
-        { name: "セージグリーン", hex: "#98ab8f" },
-        { name: "スレートブルー", hex: "#6d7f9e" },
-        { name: "モカ", hex: "#9a7b6f" }
-      ],
-      SKY: [
-        { name: "デニムブルー", hex: "#4f79a7" },
-        { name: "ミントグリーン", hex: "#8fcfb8" },
-        { name: "ライラック", hex: "#b7a1d9" },
-        { name: "コーラルピンク", hex: "#e28d7a" },
-        { name: "サンドベージュ", hex: "#cdb79e" }
-      ],
-      BEIGE: [
-        { name: "テラコッタ", hex: "#b86b4b" },
-        { name: "オリーブ", hex: "#7f8a4f" },
-        { name: "ダスティローズ", hex: "#c88d95" },
-        { name: "ティールブルー", hex: "#4f7f83" },
-        { name: "ラベンダー", hex: "#b39ddb" }
-      ]
-    };
-
+const COLOR_GUIDE = {
+  SAKURA: [
+    { name: "ローズピンク", hex: "#d97c95" },
+    { name: "ピーチベージュ", hex: "#e8bfae" },
+    { name: "モーブ", hex: "#a67c9b" },
+    { name: "セージグリーン", hex: "#9caf88" },
+    { name: "ダスティブルー", hex: "#7f9db7" }
+  ],
+  MINT: [
+    { name: "ディープグリーン", hex: "#4f8f6b" },
+    { name: "セージグリーン", hex: "#9caf88" },
+    { name: "グレージュ", hex: "#b7aa98" },
+    { name: "ラベンダーグレー", hex: "#a79fb5" },
+    { name: "スモーキーブルー", hex: "#6f8fa8" }
+  ],
+  LAVENDER: [
+    { name: "プラム", hex: "#7f5a83" },
+    { name: "ダスティピンク", hex: "#c693a8" },
+    { name: "セージグリーン", hex: "#98ab8f" },
+    { name: "スレートブルー", hex: "#6d7f9e" },
+    { name: "モカ", hex: "#9a7b6f" }
+  ],
+  SKY: [
+    { name: "デニムブルー", hex: "#4f79a7" },
+    { name: "ミントグリーン", hex: "#8fcfb8" },
+    { name: "ライラック", hex: "#b7a1d9" },
+    { name: "コーラルピンク", hex: "#e28d7a" },
+    { name: "サンドベージュ", hex: "#cdb79e" }
+  ],
+  BEIGE: [
+    { name: "テラコッタ", hex: "#b86b4b" },
+    { name: "オリーブ", hex: "#7f8a4f" },
+    { name: "ダスティローズ", hex: "#c88d95" },
+    { name: "ティールブルー", hex: "#4f7f83" },
+    { name: "ラベンダー", hex: "#b39ddb" }
+  ]
+};
+    // 8問（必須）＋追加4問（任意）
+    // それぞれの選択肢に「どの色に寄るか」の重みを付けています（仮）
     const QUESTIONS = [
+      // --- Q1〜Q8 ---
       {
         q: "休日の朝。まずしたいのは？",
         a: [
@@ -938,6 +853,8 @@
           { t: "必要なものをサッと", w: { MINT:2, SKY:1 } },
         ]
       },
+
+      // --- Q9〜Q12（追加4問） ---
       {
         extra: true,
         q: "春に取り入れたい素材は？",
@@ -1003,11 +920,11 @@
       };
     }
 
-    function showScreen(name){
-      Object.values(screens).forEach(s => s.classList.remove("active"));
-      screens[name].classList.add("active");
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }
+   function showScreen(name){
+  Object.values(screens).forEach(s => s.classList.remove("active"));
+  screens[name].classList.add("active");
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
 
     function buildList(useExtra){
       const base = QUESTIONS.filter(q => !q.extra);
@@ -1146,162 +1063,81 @@
       showScreen("result");
     }
 
-    function computeAndRenderResult(){
-      const entries = Object.entries(state.scores)
-        .map(([k,v]) => ({ key:k, score:v, ...COLORS[k] }));
+  function computeAndRenderResult(){
+  const entries = Object.entries(state.scores)
+    .map(([k,v]) => ({ key:k, score:v, ...COLORS[k] }));
 
-      entries.sort((a,b) => b.score - a.score);
+  entries.sort((a,b) => b.score - a.score);
 
-      if(entries[0].score === 0){
-        entries.forEach((e,i) => e.score = (entries.length - i));
-      }
+  if(entries[0].score === 0){
+    entries.forEach((e,i) => e.score = (entries.length - i));
+  }
 
-      const main = entries[0];
-      const subs = entries.slice(1,4);
+  const main = entries[0];
+  const subs = entries.slice(1,4);
 
-      const ball = $("#mainball");
-      ball.style.setProperty("--mainColorA", main.watercolor[0]);
-      ball.style.setProperty("--mainColorB", main.watercolor[1]);
-      ball.style.setProperty("--mainColorC", main.watercolor[2]);
+  const ball = $("#mainball");
+  ball.style.setProperty("--mainColorA", main.watercolor[0]);
+  ball.style.setProperty("--mainColorB", main.watercolor[1]);
+  ball.style.setProperty("--mainColorC", main.watercolor[2]);
 
-      $("#mainName").textContent = main.name;
-      $("#mainHint").textContent = main.hint;
-      $("#mainDot").style.background = main.hex;
-      document.body.classList.add("result-tone");
-      document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
-      document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
-      document.body.style.setProperty("--result-bg-c", main.bgTone[2]);
-      document.body.style.setProperty("--result-bg-d", main.bgTone[3]);
+  $("#mainName").textContent = main.name;
+  $("#mainHint").textContent = main.hint;
+  $("#mainDot").style.background = main.hex;
+  document.body.classList.add("result-tone");
+  document.body.style.setProperty("--result-bg-a", main.bgTone[0]);
+  document.body.style.setProperty("--result-bg-b", main.bgTone[1]);
+  document.body.style.setProperty("--result-bg-c", main.bgTone[2]);
+  document.body.style.setProperty("--result-bg-d", main.bgTone[3]);
 
-      const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
-      const pct = (x) => Math.round((x.score / sumTop4) * 100);
+  const sumTop4 = [main, ...subs].reduce((s,x) => s + x.score, 0);
+  const pct = (x) => Math.round((x.score / sumTop4) * 100);
 
-      const subsEl = $("#subs");
-      subsEl.innerHTML = "";
-      subs.forEach(s => {
-        const row = document.createElement("div");
-        row.className = "subitem";
-        row.innerHTML = `
-          <div class="swatch" style="background:${s.hex}"></div>
-          <div class="nm">${escapeHtml(s.name)}</div>
-          <div class="pct">${pct(s)}%</div>
-        `;
-        subsEl.appendChild(row);
-      });
+  const subsEl = $("#subs");
+  subsEl.innerHTML = "";
+  subs.forEach(s => {
+    const row = document.createElement("div");
+    row.className = "subitem";
+    row.innerHTML = `
+      <div class="swatch" style="background:${s.hex}"></div>
+      <div class="nm">${escapeHtml(s.name)}</div>
+      <div class="pct">${pct(s)}%</div>
+    `;
+    subsEl.appendChild(row);
+  });
 
-      const guideEl = $("#guideColors");
-      guideEl.innerHTML = "";
+const guideEl = $("#guideColors");
+guideEl.innerHTML = "";
 
-      const guideList = COLOR_GUIDE[main.key] || [];
+const guideList = COLOR_GUIDE[main.key] || [];
 
-      guideList.forEach(c => {
-        const row = document.createElement("div");
-        row.className = "subitem";
-        row.innerHTML = `
-          <div class="swatch" style="background:${c.hex}"></div>
-          <div class="nm">${escapeHtml(c.name)}</div>
-          <div class="pct">おすすめ</div>
-        `;
-        guideEl.appendChild(row);
-      });
+guideList.forEach(c => {
+  const row = document.createElement("div");
+  row.className = "subitem";
+  row.innerHTML = `
+    <div class="swatch" style="background:${c.hex}"></div>
+    <div class="nm">${escapeHtml(c.name)}</div>
+    <div class="pct">おすすめ</div>
+  `;
+  guideEl.appendChild(row);
+});
 
-      $("#desc").innerHTML = `
-        <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
-        <div class="muted" style="margin-top:8px;">
-          サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
-        </div>
-      `;
+  $("#desc").innerHTML = `
+    <div><strong>${escapeHtml(main.name)}</strong>：${escapeHtml(main.desc)}</div>
+    <div class="muted" style="margin-top:8px;">
+      サブカラーは「合わせると安定する色」や「小物で効かせる色」として使うとハマります。
+    </div>
+  `;
 
-      $("#typeDesc").innerHTML = `<strong>${escapeHtml(main.typeCode)} / ${escapeHtml(main.typeName)}</strong><div class="muted" style="margin-top:4px;">${escapeHtml(main.typeDesc)}</div>`;
-      $("#strengths").innerHTML = main.strengths.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
-      $("#weaknesses").innerHTML = main.weaknesses.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+  $("#typeDesc").innerHTML = `<strong>${escapeHtml(main.typeCode)} / ${escapeHtml(main.typeName)}</strong><div class="muted" style="margin-top:4px;">${escapeHtml(main.typeDesc)}</div>`;
+  $("#strengths").innerHTML = main.strengths.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
+  $("#weaknesses").innerHTML = main.weaknesses.map(s=>`<span class="chip">${escapeHtml(s)}</span>`).join("");
 
-      state._lastResult = { main, subs, pctMain: pct(main) };
-    }
+  state._lastResult = { main, subs, pctMain: pct(main) };
+}
 
     async function copyResult(){
       const r = state._lastResult;
       if(!r) return;
       const lines = [
-        "【大人の春カラー診断】",
-        `メイン：${r.main.name}`,
-        `サブ：${r.subs.map(s=>s.name).join(" / ")}`,
-        "",
-        `おすすめポイント：${r.main.hint}`,
-        `タイプ：${r.main.typeCode} / ${r.main.typeName}`
-      ].join("\n");
-
-      try{
-        await navigator.clipboard.writeText(lines);
-        toast("コピーしました");
-      }catch(e){
-        const ta = document.createElement("textarea");
-        ta.value = lines;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        toast("コピーしました");
-      }
-    }
-
-    let toastTimer = null;
-    function toast(msg){
-      const t = $("#toast");
-      t.textContent = msg;
-      t.classList.add("on");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=> t.classList.remove("on"), 1200);
-    }
-
-    $("#btnStart").addEventListener("click", ()=>{
-      resetAll();
-      state.activeList = buildList(false);
-      showScreen("quiz");
-      $("#slide").classList.add("in");
-      renderQuestion();
-    });
-
-    $("#btnBackTop").addEventListener("click", ()=>{
-      showScreen("top");
-    });
-
-    $("#btnReset").addEventListener("click", ()=>{
-      resetAll();
-      state.activeList = buildList(false);
-      showScreen("quiz");
-      renderQuestion();
-      toast("リセットしました");
-    });
-
-    $("#btnBranchBack").addEventListener("click", ()=>{
-      showScreen("quiz");
-      state.idx = baseCount()-1;
-      $("#slide").classList.add("in");
-      renderQuestion();
-    });
-
-    $("#branchResult").addEventListener("click", ()=>{
-      showLoadingThenResult();
-    });
-
-    $("#branchMore").addEventListener("click", ()=>{
-      state.useExtra = true;
-      state.activeList = buildList(true);
-      showScreen("quiz");
-      $("#slide").classList.add("in");
-      renderQuestion();
-    });
-
-    $("#btnCopy").addEventListener("click", copyResult);
-
-    $("#btnAgain").addEventListener("click", ()=>{
-      resetAll();
-      showScreen("top");
-      toast("もう一度どうぞ");
-    });
-
-    resetAll();
-  </script>
-</body>
-</html>
+        "
